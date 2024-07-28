@@ -1,0 +1,24 @@
+server:
+  servlet:
+    context-path: /api/blogs
+
+spring:
+  application:
+    name: auditing-entities
+    
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: BLOG
+    password: BLOG
+    driver-class-name: oracle.jdbc.OracleDriver
+  
+  jpa:
+    #hibernate:
+    #  ddl-auto: update
+    show-sql: true
+    database: oracle
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        format_sql: true
+        
