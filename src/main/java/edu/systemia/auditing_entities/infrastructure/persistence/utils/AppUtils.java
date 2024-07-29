@@ -6,15 +6,15 @@ import java.util.stream.Stream;
 
 public final class AppUtils {
 
-    public static <T> boolean verifyAllAttrsIfNotNull(T obj) {
-	Field[] fields = obj.getClass().getDeclaredFields();
-	return Stream.of(fields).allMatch(field -> {
-	    field.setAccessible(true);
-	    try {
-		return !Objects.isNull(field.get(obj));
-	    } catch (IllegalArgumentException | IllegalAccessException e) {
-		return false;
-	    }
-	});
-    }
+	public static <T> boolean verifyAllAttrsIfNotNull(T obj) {
+		Field[] fields = obj.getClass().getDeclaredFields();
+		return Stream.of(fields).allMatch(field -> {
+			field.setAccessible(true);
+			try {
+				return !Objects.isNull(field.get(obj));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				return false;
+			}
+		});
+	}
 }

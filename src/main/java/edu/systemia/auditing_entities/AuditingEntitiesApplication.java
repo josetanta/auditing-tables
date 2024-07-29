@@ -11,8 +11,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerial
 @EnableJpaAuditing
 public class AuditingEntitiesApplication {
 
-    public static void main(String[] args) {
-	SpringApplication.run(AuditingEntitiesApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(AuditingEntitiesApplication.class, args);
+	}
 
 }

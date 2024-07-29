@@ -1,26 +1,14 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.entity;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,37 +17,44 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "BLOG_AUTHORS")
 @EntityListeners(AuditingEntityListener.class)
-public class Author {
+public class Author implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTHORS_SEQUENCE")
-    @SequenceGenerator(name = "AUTHORS_SEQUENCE", sequenceName = "BLOG_AUTHOR_SEQ", allocationSize = 1)
-    @Column(name = "AT_ID", precision = 19)
-    private Long id;
+	private static final long serialVersionUID = 1L;
 
-    @Column(name = "AT_FIRSTNAME", length = 100)
-    private String firstname;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTHORS_SEQUENCE")
+	@SequenceGenerator(name = "AUTHORS_SEQUENCE", sequenceName = "BLOG_AUTHOR_SEQ", allocationSize = 1)
+	@Column(name = "AT_ID", precision = 19)
+	private Long id;
 
-    @Column(name = "AT_LASTNAME", length = 100)
-    private String lastname;
+	@Column(name = "AT_FIRSTNAME", length = 100)
+	private String firstname;
 
-    @Column(nullable = false, updatable = false)
-    @CreatedDate
-    private LocalDateTime createdAt;
+	@Column(name = "AT_LASTNAME", length = 100)
+	private String lastname;
 
-    @Column(insertable = false)
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
+	@Column(name = "AT_ACTIVE", length = 1, nullable = false)
+	private String active;
 
-//	@ManyToMany
-//	@JoinTable(name = "COURSE_AUTHORS", 
-//		joinColumns = @JoinColumn(name = "AT_ID"), 
-//		inverseJoinColumns = @JoinColumn(name = "CO_ID")
-//	)
-//	Set<Course> courses;
-    @OneToMany(mappedBy = "author")
-    private List<Subscription> subscriptions;
+	@Column(nullable = false, updatable = false)
+	@CreatedDate
+	private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "author", orphanRemoval = true)
-    private List<Note> notes;
+	@Column(insertable = false)
+	@LastModifiedDate
+	private LocalDateTime updatedAt;
+
+	// @ManyToMany
+	// @JoinTable(name = "COURSE_AUTHORS",
+	// joinColumns = @JoinColumn(name = "AT_ID"),
+	// inverseJoinColumns = @JoinColumn(name = "CO_ID")
+	// )
+	// Set<Course> courses;
+	@OneToMany(mappedBy = "author")
+	@ToString.Exclude
+	private List<Subscription> subscriptions;
+
+	@OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
+	@ToString.Exclude
+	private List<Note> notes;
 }

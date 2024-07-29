@@ -1,7 +1,5 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.repository.views;
 
-
-
 import java.time.LocalDateTime;
 
 public interface SubscriptionView {
@@ -18,14 +16,14 @@ public interface SubscriptionView {
 
 		/**
 		 * Last name of Author
-		 * 
+		 *
 		 * @return Last name
 		 */
 		String getLastname();
 
 		/**
 		 * First name of Author
-		 * 
+		 *
 		 * @return First name
 		 */
 		String getFirstname();
