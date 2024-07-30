@@ -9,13 +9,15 @@ import org.mapstruct.*;
 public interface AuthorMapper extends AbstractMapper<Author, AuthorDTO> {
 
 	@Override
-	@Mappings({ @Mapping(target = "active", expression = "java(dto.active() ? \"Y\" : \"N\")"),
-		@Mapping(target = "author.notes", ignore = true) })
+	@Mappings({ 
+		@Mapping(target = "active", expression = "java(dto.active() ? \"Y\" : \"N\")")
+	})
 	Author mapToModel(AuthorDTO dto, @Context CycleAvoidingMappingContext context);
 
 	@Override
-	@Mappings({ @Mapping(target = "active", expression = "java(domain.getActive().equalsIgnoreCase(\"Y\"))"),
-		@Mapping(target = "author.notes", ignore = true) })
+	@Mappings({ 
+		@Mapping(target = "active", expression = "java(domain.getActive().equalsIgnoreCase(\"Y\"))")
+	})
 	AuthorDTO mapToDto(Author domain, @Context CycleAvoidingMappingContext context);
 
 }

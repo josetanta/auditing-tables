@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -29,6 +30,24 @@ public class AuthorAPIRest {
 		var authorSaved = authorRepository.save(author);
 		var authorDTO = mapper.mapToDto(authorSaved, cycleAvoid);
 		return ResponseEntity.created(URI.create("")).body(authorDTO);
+	}
+	
+	@PutMapping
+	public ResponseEntity<AuthorDTO> putUpdateAuthor(@RequestBody AuthorDTO dto) {
+		
+		if (Objects.isNull(dto.id())) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		if (!authorRepository.existsById(dto.id())) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		final var cycleAvoid = new CycleAvoidingMappingContext();
+		var author = mapper.mapToModel(dto, cycleAvoid);
+		var authorSaved = authorRepository.save(author);
+		var authorDTO = mapper.mapToDto(authorSaved, cycleAvoid);
+		return ResponseEntity.ok(authorDTO);
 	}
 
 	@GetMapping
