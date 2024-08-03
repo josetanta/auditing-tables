@@ -1,3 +1,8 @@
+logging:
+  level:
+    org:
+      hibernate: INFO
+
 server:
   servlet:
     context-path: /api/blogs
@@ -19,6 +24,7 @@ spring:
     database: oracle
     properties:
       hibernate:
+        generate_statistics: true
         dialect: org.hibernate.dialect.OracleDialect
         format_sql: true
         

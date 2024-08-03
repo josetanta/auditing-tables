@@ -18,4 +18,10 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
 
 	// @Query(value = "select s from Subscription s where s.author.id=:id")
 	// Page<SubscriptionView> findAllSubscriptions(Pageable pageable, Long id);
+	// Page<SubscriptionView> getAllByAuthor_IdOrderByAuthor_FirstnameDesc(Pageable
+	// pageable, Long autghorID);
+
+	// Page<SubscriptionView> getAllByAuthor_IdOrderByCourse_NameDesc(Pageable pageable, Long autghorID);
+	
+	Page<SubscriptionView> getAllByAuthor_Id(Pageable pageable, Long autghorID);
 }

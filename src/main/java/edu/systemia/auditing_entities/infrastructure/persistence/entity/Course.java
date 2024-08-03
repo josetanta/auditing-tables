@@ -18,8 +18,10 @@ import java.util.Set;
 public class Course implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@OneToMany(mappedBy = "course", orphanRemoval = true)
 	Set<Subscription> subscriptions;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COURSES_SEQUENCE")
 	@SequenceGenerator(name = "COURSES_SEQUENCE", sequenceName = "BLOG_COURSE_SEQ", allocationSize = 1)

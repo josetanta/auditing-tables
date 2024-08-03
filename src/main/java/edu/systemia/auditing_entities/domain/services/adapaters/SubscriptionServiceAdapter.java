@@ -17,7 +17,13 @@ public class SubscriptionServiceAdapter implements SubscriptionService {
 
 	@Override
 	public Page<SubscriptionView> findAllSubscription(@NonNull Pageable pageable, @NonNull Long id) {
-		var subsPage = repository.findAllByAuthor_Id(pageable, id, SubscriptionView.class);
+		// var subsPage = repository.findAllByAuthor_Id(pageable, id,
+		// SubscriptionView.class);
+		// var subsPage =
+		// repository.getAllByAuthor_IdOrderByAuthor_FirstnameDesc(pageable, id);
+		// var subsPage = repository.getAllByAuthor_IdOrderByCourse_NameDesc(pageable,
+		// id);
+		var subsPage = repository.getAllByAuthor_Id(pageable, id);
 		return subsPage;
 	}
 

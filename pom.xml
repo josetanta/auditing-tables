@@ -29,6 +29,8 @@
 		<url />
 	</scm>
 	<properties>
+		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 		<org.lombok.version>1.18.30</org.lombok.version>
@@ -101,20 +103,20 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!--			<plugin>-->
-			<!--				<groupId>org.graalvm.buildtools</groupId>-->
-			<!--				<artifactId>native-maven-plugin</artifactId>-->
-			<!--				<extensions>true</extensions>-->
-			<!--				<executions>-->
-			<!--					<execution>-->
-			<!--						<id>build-native</id>-->
-			<!--						<goals>-->
-			<!--							<goal>compile-no-fork</goal>-->
-			<!--						</goals>-->
-			<!--						<phase>package</phase>-->
-			<!--					</execution>-->
-			<!--				</executions>-->
-			<!--			</plugin>-->
+			<plugin>
+				<groupId>org.graalvm.buildtools</groupId>
+				<artifactId>native-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>build-native</id>
+						<goals>
+							<goal>compile-no-fork</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
