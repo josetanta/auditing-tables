@@ -4,7 +4,7 @@ import edu.systemia.auditing_entities.infrastructure.persistence.dto.AuthorDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
 import edu.systemia.auditing_entities.infrastructure.persistence.mappers.AuthorMapper;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.AuthorRepository;
-import edu.systemia.auditing_entities.infrastructure.persistence.utils.CycleAvoidingMappingContext;
+import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,18 +31,18 @@ public class AuthorAPIRest {
 		var authorDTO = mapper.mapToDto(authorSaved, cycleAvoid);
 		return ResponseEntity.created(URI.create("")).body(authorDTO);
 	}
-	
+
 	@PutMapping
 	public ResponseEntity<AuthorDTO> putUpdateAuthor(@RequestBody AuthorDTO dto) {
-		
+
 		if (Objects.isNull(dto.id())) {
 			return ResponseEntity.badRequest().build();
 		}
-		
+
 		if (!authorRepository.existsById(dto.id())) {
 			return ResponseEntity.notFound().build();
 		}
-		
+
 		final var cycleAvoid = new CycleAvoidingMappingContext();
 		var author = mapper.mapToModel(dto, cycleAvoid);
 		var authorSaved = authorRepository.save(author);

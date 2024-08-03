@@ -1,4 +1,4 @@
-package edu.systemia.auditing_entities.infrastructure.persistence.utils;
+package edu.systemia.auditing_entities.infrastructure.utils;
 
 import org.mapstruct.BeforeMapping;
 import org.mapstruct.MappingTarget;

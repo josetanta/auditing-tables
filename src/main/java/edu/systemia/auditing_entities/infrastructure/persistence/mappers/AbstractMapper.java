@@ -1,8 +1,9 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.mappers;
 
-import edu.systemia.auditing_entities.infrastructure.persistence.utils.CycleAvoidingMappingContext;
 import org.mapstruct.Context;
 import org.springframework.data.domain.Page;
+
+import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 
 import java.util.List;
 
