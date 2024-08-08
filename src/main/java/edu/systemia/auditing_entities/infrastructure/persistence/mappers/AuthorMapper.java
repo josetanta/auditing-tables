@@ -1,6 +1,6 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.mappers;
 
-import edu.systemia.auditing_entities.infrastructure.persistence.dto.AuthorDTO;
+import edu.systemia.auditing_entities.infrastructure.dto.AuthorDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
 import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 

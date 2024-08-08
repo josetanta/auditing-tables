@@ -1,6 +1,7 @@
 package edu.systemia.auditing_entities.application.rest;
 
-import edu.systemia.auditing_entities.infrastructure.persistence.dto.AuthorDTO;
+import edu.systemia.auditing_entities.domain.services.AuthorService;
+import edu.systemia.auditing_entities.infrastructure.dto.AuthorDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
 import edu.systemia.auditing_entities.infrastructure.persistence.mappers.AuthorMapper;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.AuthorRepository;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +23,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AuthorAPIRest {
 	private final AuthorRepository authorRepository;
+	private final AuthorService authorService;
 	private final AuthorMapper mapper;
 
 	@PostMapping
@@ -79,6 +82,15 @@ public class AuthorAPIRest {
 	@GetMapping(path = "/author-view")
 	public ResponseEntity<Object> getAuthorViewAll(Pageable pageable, @RequestParam String firstname) {
 		var authors = authorRepository.findAllByFirstnameContaining(pageable, firstname);
+		return ResponseEntity.ok(authors);
+	}
+
+	@GetMapping(path = "/author-dto-view")
+	public ResponseEntity<Object> getAuthorDTOViewAll(
+		@PageableDefault(size = 5) Pageable pageable,
+		@RequestParam String firstname
+	) {
+		var authors = authorService.paginateAuthor(pageable, firstname);
 		return ResponseEntity.ok(authors);
 	}
 }

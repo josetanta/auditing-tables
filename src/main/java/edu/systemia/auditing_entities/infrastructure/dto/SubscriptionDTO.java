@@ -1,4 +1,4 @@
-package edu.systemia.auditing_entities.infrastructure.persistence.dto;
+package edu.systemia.auditing_entities.infrastructure.dto;
 
 import java.time.LocalDateTime;
 

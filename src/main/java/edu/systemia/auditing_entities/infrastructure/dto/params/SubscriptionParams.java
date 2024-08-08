@@ -1,4 +1,4 @@
-package edu.systemia.auditing_entities.infrastructure.persistence.dto.params;
+package edu.systemia.auditing_entities.infrastructure.dto.params;
 
 import org.springframework.web.bind.annotation.RequestParam;
 

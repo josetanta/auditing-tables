@@ -5,9 +5,10 @@ import edu.systemia.auditing_entities.infrastructure.persistence.repository.view
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.query.Procedure;
 
-public interface AuthorRepository extends JpaRepository<Author, Long> {
+public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecificationExecutor<Author> {
 
 	@Procedure(procedureName = "get_padded_sequence_value")
 	String getProcedureSeqValue();
