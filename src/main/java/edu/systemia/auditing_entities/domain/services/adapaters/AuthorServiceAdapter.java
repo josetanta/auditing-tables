@@ -56,11 +56,11 @@ public class AuthorServiceAdapter implements AuthorService {
 		var resultList = typedQuery.getResultList();
 
 
-		/*CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
 		Root<Author> countRoot = countQuery.from(Author.class);
 		countQuery.select(cb.count(countRoot));
 		countQuery.where(predicate);
-		Long count = entityManager.createQuery(countQuery).getSingleResult();*/
+		long count = entityManager.createQuery(countQuery).getSingleResult();
 
 		return new PageImpl<>(resultList, pageable, resultList.size());
 	}
