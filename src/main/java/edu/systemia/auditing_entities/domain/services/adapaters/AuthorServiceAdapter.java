@@ -23,9 +23,9 @@ import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
@@ -77,8 +77,6 @@ public class AuthorServiceAdapter implements AuthorService {
 
 	@Override
 	public ByteArrayResource exportPdf() throws IOException, DocumentException {
-//		String srcLogo = "/static/images/oracle_logo.png";
-//		byte[] allBytes = Files.readAllBytes(Paths.get(srcLogo));
 		var classPathResource = new ClassPathResource("/static/images/oracle_logo.jpg");
 		byte[] allBytes = Files.readAllBytes(classPathResource.getFile().toPath());
 		
@@ -87,17 +85,23 @@ public class AuthorServiceAdapter implements AuthorService {
 		PdfWriter.getInstance(document, out);
 		document.open();
 		
-		// ImageData imageData = ImageDataFactory.create(allBytes);
 		Image image = Image.getInstance(allBytes);
 		image.setBorder(1);
 		image.setBorderColor(BaseColor.BLACK);
-		document.add(image);
 		
-		var paragraph = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN");
-		paragraph.setAlignment(Element.ALIGN_RIGHT);
-		document.add(paragraph);
-		// image.setBorder(new SolidBorder(1));
-		// image.setFixedPosition(50, 650);
+		var p1 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN");
+		p1.setAlignment(Element.ALIGN_RIGHT);
+		
+		var fontBold = new Font();
+		fontBold.setStyle(Font.BOLDITALIC);
+		fontBold.setColor(BaseColor.RED);
+		
+		var p2 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN", fontBold);
+		p2.setIndentationLeft(120);
+		
+		document.add(image);
+		document.add(p1);
+		document.add(p2);
 		document.close();
 		out.close();
 		
