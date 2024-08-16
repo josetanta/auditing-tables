@@ -8,12 +8,20 @@ import edu.systemia.auditing_entities.infrastructure.persistence.repository.Auth
 import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.itextpdf.text.DocumentException;
+
+import java.io.IOException;
 import java.net.URI;
 import java.util.Objects;
 
@@ -92,5 +100,18 @@ public class AuthorAPIRest {
 	) {
 		var authors = authorService.paginateAuthor(pageable, firstname);
 		return ResponseEntity.ok(authors);
+	}
+	
+	@GetMapping(path = "/export-pdf", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PDF_VALUE })
+	public ResponseEntity<Object> getExportPDF() {
+		try {
+			ByteArrayResource exportPdf = authorService.exportPdf();
+			return ResponseEntity.ok()
+					.contentType(MediaType.APPLICATION_PDF)
+					.body(exportPdf);
+			
+		} catch (IOException | DocumentException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to export PDF");
+		}
 	}
 }

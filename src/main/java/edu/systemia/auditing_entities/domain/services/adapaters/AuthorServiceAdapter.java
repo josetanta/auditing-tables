@@ -3,7 +3,6 @@ package edu.systemia.auditing_entities.domain.services.adapaters;
 import edu.systemia.auditing_entities.domain.services.AuthorService;
 import edu.systemia.auditing_entities.infrastructure.dto.AuthorQueryResult;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
-import edu.systemia.auditing_entities.infrastructure.persistence.repository.AuthorRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -11,12 +10,25 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 import static edu.systemia.auditing_entities.infrastructure.persistence.repository.specs.AuthorSpec.withFirstname;
@@ -24,8 +36,6 @@ import static edu.systemia.auditing_entities.infrastructure.persistence.reposito
 @Service
 @RequiredArgsConstructor
 public class AuthorServiceAdapter implements AuthorService {
-
-	private final AuthorRepository authorRepository;
 
 	@PersistenceContext
 	private final EntityManager entityManager;
@@ -42,8 +52,8 @@ public class AuthorServiceAdapter implements AuthorService {
 		if (pageable.getSort().isSorted()) {
 			var orders = new ArrayList<Order>();
 			for (Sort.Order order : pageable.getSort()) {
-				orders.add(order.isAscending() ? cb.asc(authorRoot.get(order.getProperty())) :
-					order.isDescending() ? cb.desc(authorRoot.get(order.getProperty())) : null);
+				orders.add(order.isAscending() ? cb.asc(authorRoot.get(order.getProperty()))
+						: order.isDescending() ? cb.desc(authorRoot.get(order.getProperty())) : null);
 			}
 			query.orderBy(orders);
 		}
@@ -55,14 +65,36 @@ public class AuthorServiceAdapter implements AuthorService {
 		typedQuery.setMaxResults(pageable.getPageSize());
 		var resultList = typedQuery.getResultList();
 
-
 		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
 		Root<Author> countRoot = countQuery.from(Author.class);
 		countQuery.select(cb.count(countRoot));
 		countQuery.where(predicate);
-		long count = entityManager.createQuery(countQuery).getSingleResult();
 
 		return new PageImpl<>(resultList, pageable, resultList.size());
+	}
+
+	@Override
+	public ByteArrayResource exportPdf() throws IOException, DocumentException {
+//		String srcLogo = "/static/images/oracle_logo.png";
+//		byte[] allBytes = Files.readAllBytes(Paths.get(srcLogo));
+		var classPathResource = new ClassPathResource("/static/images/oracle_logo.jpg");
+		byte[] allBytes = Files.readAllBytes(classPathResource.getFile().toPath());
+		
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Document document = new Document();
+		PdfWriter.getInstance(document, out);
+		document.open();
+		
+		// ImageData imageData = ImageDataFactory.create(allBytes);
+		Image image = Image.getInstance(allBytes);
+		document.add(image);
+		document.add(new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN"));
+		// image.setBorder(new SolidBorder(1));
+		// image.setFixedPosition(50, 650);
+		document.close();
+		out.close();
+		
+		return new ByteArrayResource(out.toByteArray());
 	}
 
 }
