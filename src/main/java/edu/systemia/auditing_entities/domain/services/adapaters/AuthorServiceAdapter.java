@@ -26,6 +26,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
@@ -86,7 +87,7 @@ public class AuthorServiceAdapter implements AuthorService {
 		document.open();
 		
 		Image image = Image.getInstance(allBytes);
-		image.setBorder(1);
+		image.setBorder(Rectangle.BOX);
 		image.setBorderColor(BaseColor.BLACK);
 		
 		var p1 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN");
@@ -97,11 +98,19 @@ public class AuthorServiceAdapter implements AuthorService {
 		fontBold.setColor(BaseColor.RED);
 		
 		var p2 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN", fontBold);
-		p2.setIndentationLeft(120);
-		
+		p2.setIndentationLeft(20);
 		document.add(image);
 		document.add(p1);
 		document.add(p2);
+		
+		document.newPage();
+		var p3 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN", fontBold);
+		document.add(p3);
+
+		document.newPage();
+		var p4 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN", fontBold);
+		document.add(p4);
+		
 		document.close();
 		out.close();
 		
