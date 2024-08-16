@@ -1,5 +1,6 @@
 package edu.systemia.auditing_entities.infrastructure.utils;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
@@ -19,6 +20,20 @@ public class HeaderFooterPageEvent extends PdfPageEventHelper {
 		// ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER,
 		// new Phrase("Top Right"), 550, 800,
 		// 0);
+		if (writer.getPageNumber() > 1) {
+			var font = new Font();
+			font.setSize(12);
+			font.setColor(BaseColor.ORANGE);
+			font.setStyle(Font.BOLD);
+
+			var text = new Phrase("@josetanta", font);
+			PdfContentByte cb = writer.getDirectContent();
+			Rectangle rect = writer.getPageSize();
+			float x = rect.getLeft() + document.leftMargin();
+			float y = rect.getTop() - 40;
+			ColumnText.showTextAligned(cb, Element.ALIGN_LEFT, text, x, y, 0);
+		}
+
 	}
 
 	@Override
@@ -29,8 +44,9 @@ public class HeaderFooterPageEvent extends PdfPageEventHelper {
 		// new Phrase("pag. " + document.getPageNumber()), 550, 30, 0);
 		var font = new Font();
 		font.setSize(11);
+		font.setColor(BaseColor.GRAY);
 		font.setStyle(Font.BOLDITALIC);
-		
+
 		var text = new Phrase("pag. " + document.getPageNumber(), font);
 		PdfContentByte cb = writer.getDirectContent();
 		Rectangle rect = writer.getPageSize();
