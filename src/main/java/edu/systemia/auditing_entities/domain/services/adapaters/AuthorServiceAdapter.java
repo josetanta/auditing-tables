@@ -19,8 +19,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfDocument;
@@ -87,8 +89,13 @@ public class AuthorServiceAdapter implements AuthorService {
 		
 		// ImageData imageData = ImageDataFactory.create(allBytes);
 		Image image = Image.getInstance(allBytes);
+		image.setBorder(1);
+		image.setBorderColor(BaseColor.BLACK);
 		document.add(image);
-		document.add(new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN"));
+		
+		var paragraph = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN");
+		paragraph.setAlignment(Element.ALIGN_RIGHT);
+		document.add(paragraph);
 		// image.setBorder(new SolidBorder(1));
 		// image.setFixedPosition(50, 650);
 		document.close();
