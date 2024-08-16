@@ -3,6 +3,8 @@ package edu.systemia.auditing_entities.domain.services.adapaters;
 import edu.systemia.auditing_entities.domain.services.AuthorService;
 import edu.systemia.auditing_entities.infrastructure.dto.AuthorQueryResult;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
+import edu.systemia.auditing_entities.infrastructure.persistence.repository.AuthorRepository;
+import edu.systemia.auditing_entities.infrastructure.utils.HeaderFooterPageEvent;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -24,6 +26,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Header;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
@@ -32,7 +35,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import static edu.systemia.auditing_entities.infrastructure.persistence.repository.specs.AuthorSpec.withFirstname;
 
@@ -42,6 +47,7 @@ public class AuthorServiceAdapter implements AuthorService {
 
 	@PersistenceContext
 	private final EntityManager entityManager;
+	private final AuthorRepository authorRepository;
 
 	@Override
 	public Page<AuthorQueryResult> paginateAuthor(Pageable pageable, String filterFirstname) {
@@ -78,42 +84,60 @@ public class AuthorServiceAdapter implements AuthorService {
 
 	@Override
 	public ByteArrayResource exportPdf() throws IOException, DocumentException {
-		var classPathResource = new ClassPathResource("/static/images/oracle_logo.jpg");
+		
+		var authors = authorRepository.findAll();
+		
+		String authorSummary = authors.stream()
+			.map(author -> MessageFormat.format("{0} {1} {2}", author.getFirstname(), author.getLastname(), author.getActive()))
+			.collect(Collectors.joining(", "));
+		
+		var classPathResource = new ClassPathResource("/static/images/oracle_logo.png");
 		byte[] allBytes = Files.readAllBytes(classPathResource.getFile().toPath());
 		
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		Document document = new Document();
-		PdfWriter.getInstance(document, out);
-		document.open();
-		
-		Image image = Image.getInstance(allBytes);
-		image.setBorder(Rectangle.BOX);
-		image.setBorderColor(BaseColor.BLACK);
-		
-		var p1 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN");
-		p1.setAlignment(Element.ALIGN_RIGHT);
+		PdfWriter writer = PdfWriter.getInstance(document, out);
+		writer.setPageEvent(new HeaderFooterPageEvent());
+		document.setMargins(60, 60, 70, 70);
 		
 		var fontBold = new Font();
 		fontBold.setStyle(Font.BOLDITALIC);
 		fontBold.setColor(BaseColor.RED);
 		
-		var p2 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN", fontBold);
-		p2.setIndentationLeft(20);
+		document.open();
+		
+		Header header = new Header("My Document", "1234-----");
+		document.add(header);
+		
+		Image image = Image.getInstance(allBytes);
+		image.scaleAbsolute(100, 50);
+		image.setBorder(Rectangle.BOX);
+		image.setBorderColor(BaseColor.BLACK);
 		document.add(image);
+		
+		var subtitle = new Paragraph("Summary all Users", fontBold);
+		document.add(subtitle);
+		
+		var p1 = new Paragraph("\nJOSÉ GABRIEL TANTA CALDERÓN\n\n");
+		p1.setAlignment(Element.ALIGN_RIGHT);
+		
+		var p2 = new Paragraph(authorSummary + authorSummary, fontBold);
+		p2.setFirstLineIndent(20);
+		p2.setAlignment(Element.ALIGN_JUSTIFIED_ALL);
 		document.add(p1);
 		document.add(p2);
 		
-		document.newPage();
-		var p3 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN", fontBold);
+		// document.newPage();
+		var p3 = new Paragraph(authorSummary + authorSummary, fontBold);
+		p3.setAlignment(Element.ALIGN_JUSTIFIED_ALL);
 		document.add(p3);
 
-		document.newPage();
-		var p4 = new Paragraph("JOSÉ GABRIEL TANTA CALDERÓN", fontBold);
+		// document.newPage();
+		var p4 = new Paragraph(MessageFormat.format("Hola {0}", "JOSÉ GABRIEL TANTA CALDERÓN"), fontBold);
 		document.add(p4);
 		
 		document.close();
 		out.close();
-		
 		return new ByteArrayResource(out.toByteArray());
 	}
 
