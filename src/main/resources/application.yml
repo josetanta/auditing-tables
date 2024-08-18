@@ -25,6 +25,6 @@ spring:
     properties:
       hibernate:
         generate_statistics: true
-        dialect: org.hibernate.dialect.OracleDialect
         format_sql: true
+    open-in-view: false
         

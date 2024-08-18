@@ -30,13 +30,14 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.pdf.PdfWriter;
+
+import static java.text.MessageFormat.format;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -88,8 +89,9 @@ public class AuthorServiceAdapter implements AuthorService {
 
 		var authors = authorRepository.findAll();
 
-		String authorSummary = authors.stream().map(author -> MessageFormat.format("{0} {1} {2}", author.getFirstname(),
-			author.getLastname(), author.getActive())).collect(Collectors.joining(", "));
+		String authorSummary = authors.stream()
+				.map(author -> format("{0} {1} {2}", author.getFirstname(), author.getLastname(), author.getActive()))
+				.collect(Collectors.joining(", "));
 
 		var classPathResource = new ClassPathResource("/static/images/oracle_logo.png");
 		byte[] allBytes = Files.readAllBytes(classPathResource.getFile().toPath());
@@ -102,22 +104,16 @@ public class AuthorServiceAdapter implements AuthorService {
 
 		var fontBold = new Font();
 		fontBold.setStyle(Font.BOLDITALIC);
-		fontBold.setColor(BaseColor.RED);
+		fontBold.setColor(new BaseColor(0.143f, 0.163f, 0.28f, 0.8f));
 
 		document.open();
-
-		// Header header = new Header("My Document", "1234-----");
-		// document.add(header);
 
 		int numPage = writer.getCurrentPageNumber();
 
 		if (numPage == 1) {
 			Image image;
 			image = Image.getInstance(allBytes);
-			image.scaleAbsolute(200, 150);
-			image.setBorderWidth(2);
-			image.setBorder(1);
-			image.setBorderColor(BaseColor.MAGENTA);
+			image.scaleAbsolute(250, 150);
 			document.add(image);
 
 			var subtitle = new Paragraph("Summary all Users", fontBold);
@@ -130,39 +126,25 @@ public class AuthorServiceAdapter implements AuthorService {
 
 		var fontParagraph = new Font();
 		fontParagraph.setStyle(Font.NORMAL);
-		fontParagraph.setFamily(FontFamily.HELVETICA.name());
-		
+		fontParagraph.setFamily(FontFactory.HELVETICA_OBLIQUE);
+
 		var fontParagraphTitle = new Font();
 		fontParagraphTitle.setStyle(Font.BOLD);
-		fontParagraphTitle.setFamily(FontFamily.HELVETICA.name());
-		
+		fontParagraphTitle.setFamily(FontFactory.HELVETICA);
+
 		for (int i = 0; i < 6; i++) {
 			var title = new Phrase("MI-TITLE\u00A0\u00A0\u00A0", fontParagraphTitle);
-			var summary = new Phrase(authorSummary, fontParagraph);
-			
-			var p3 = new Paragraph();
-			p3.setAlignment(Element.ALIGN_JUSTIFIED_ALL);
-			p3.add(title);
-			p3.add(summary);
-			p3.add(Chunk.NEWLINE);
-			p3.add(Chunk.NEWLINE);
-			document.add(p3);
+			var summaryPhrase = new Phrase(authorSummary + ".", fontParagraph);
+
+			var bodyParagraph = new Paragraph();
+			bodyParagraph.setAlignment(Element.ALIGN_JUSTIFIED);
+			bodyParagraph.add(title);
+			bodyParagraph.add(summaryPhrase);
+			bodyParagraph.setLeading(22);
+			bodyParagraph.add(Chunk.NEWLINE);
+			bodyParagraph.add(Chunk.NEWLINE);
+			document.add(bodyParagraph);
 		}
-
-		// var p2 = new Paragraph(authorSummary, fontBold);
-		// p2.setFirstLineIndent(20);
-		// p2.setAlignment(Element.ALIGN_JUSTIFIED_ALL);
-		// document.add(p2);
-
-		// document.newPage();
-		// var p3 = new Paragraph(authorSummary, fontBold);
-		// p3.setAlignment(Element.ALIGN_JUSTIFIED_ALL);
-		// document.add(p3);
-
-		// document.newPage();
-		// var p4 = new Paragraph(MessageFormat.format("Hola {0}", "JOSÉ GABRIEL TANTA
-		// CALDERÓN"), fontBold);
-		// document.add(p4);
 
 		document.close();
 		out.close();
