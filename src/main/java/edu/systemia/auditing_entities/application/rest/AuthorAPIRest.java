@@ -36,9 +36,9 @@ public class AuthorAPIRest {
 	@PostMapping
 	public ResponseEntity<AuthorDTO> postCreateAuthor(@RequestBody AuthorDTO dto) {
 		final var cycleAvoid = new CycleAvoidingMappingContext();
-		var author = mapper.mapToModel(dto, cycleAvoid);
+		var author = mapper.toModel(dto, cycleAvoid);
 		var authorSaved = authorRepository.save(author);
-		var authorDTO = mapper.mapToDto(authorSaved, cycleAvoid);
+		var authorDTO = mapper.toDto(authorSaved, cycleAvoid);
 		return ResponseEntity.created(URI.create("")).body(authorDTO);
 	}
 
@@ -54,9 +54,9 @@ public class AuthorAPIRest {
 		}
 
 		final var cycleAvoid = new CycleAvoidingMappingContext();
-		var author = mapper.mapToModel(dto, cycleAvoid);
+		var author = mapper.toModel(dto, cycleAvoid);
 		var authorSaved = authorRepository.save(author);
-		var authorDTO = mapper.mapToDto(authorSaved, cycleAvoid);
+		var authorDTO = mapper.toDto(authorSaved, cycleAvoid);
 		return ResponseEntity.ok(authorDTO);
 	}
 
@@ -75,7 +75,7 @@ public class AuthorAPIRest {
 		log.info("Find by {}", id);
 
 		var author = authorRepository.findById(id).orElseThrow();
-		var authorDTO = mapper.mapToDto(author, new CycleAvoidingMappingContext());
+		var authorDTO = mapper.toDto(author, new CycleAvoidingMappingContext());
 		log.info("Results is {}", author);
 
 		return ResponseEntity.ok(authorDTO);
@@ -93,22 +93,18 @@ public class AuthorAPIRest {
 	}
 
 	@GetMapping(path = "/author-dto-view")
-	public ResponseEntity<Object> getAuthorDTOViewAll(
-		@PageableDefault(size = 5) Pageable pageable,
-		@RequestParam String firstname
-	) {
+	public ResponseEntity<Object> getAuthorDTOViewAll(@PageableDefault(size = 5) Pageable pageable,
+		@RequestParam String firstname) {
 		var authors = authorService.paginateAuthor(pageable, firstname);
 		return ResponseEntity.ok(authors);
 	}
-	
+
 	@GetMapping(path = "/export-pdf", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_PDF_VALUE })
 	public ResponseEntity<Object> getExportPDF() {
 		try {
 			ByteArrayResource exportPdf = authorService.exportPdf();
-			return ResponseEntity.ok()
-					.contentType(MediaType.APPLICATION_PDF)
-					.body(exportPdf);
-			
+			return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(exportPdf);
+
 		} catch (IOException | DocumentException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to export PDF");
 		}

@@ -15,16 +15,16 @@ import java.util.List;
  */
 public interface AbstractMapper<M, D> {
 
-	M mapToModel(D dto, @Context CycleAvoidingMappingContext context);
+	M toModel(D dto, @Context CycleAvoidingMappingContext context);
 
-	List<M> mapToModel(List<D> dtos, @Context CycleAvoidingMappingContext context);
+	List<M> toModel(List<D> dtos, @Context CycleAvoidingMappingContext context);
 
-	D mapToDto(M domain, @Context CycleAvoidingMappingContext context);
+	D toDto(M domain, @Context CycleAvoidingMappingContext context);
 
-	List<D> mapToDto(List<M> domains, @Context CycleAvoidingMappingContext context);
+	List<D> toDto(List<M> domains, @Context CycleAvoidingMappingContext context);
 
 	default Page<D> mapToDto(Page<M> domains, @Context CycleAvoidingMappingContext context) {
-		return domains.map(domain -> this.mapToDto(domain, context));
+		return domains.map(domain -> toDto(domain, context));
 	}
 
 }

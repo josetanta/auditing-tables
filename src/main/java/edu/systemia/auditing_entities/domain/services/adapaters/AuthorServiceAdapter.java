@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static edu.systemia.auditing_entities.infrastructure.persistence.repository.specs.AuthorSpec.withFirstname;
 
@@ -86,7 +87,6 @@ public class AuthorServiceAdapter implements AuthorService {
 
 	@Override
 	public ByteArrayResource exportPdf() throws IOException, DocumentException {
-
 		var authors = authorRepository.findAll();
 
 		String authorSummary = authors.stream()
@@ -132,7 +132,7 @@ public class AuthorServiceAdapter implements AuthorService {
 		fontParagraphTitle.setStyle(Font.BOLD);
 		fontParagraphTitle.setFamily(FontFactory.HELVETICA);
 
-		for (int i = 0; i < 6; i++) {
+		IntStream.range(0, 7).forEach(idx -> {
 			var title = new Phrase("MI-TITLE\u00A0\u00A0\u00A0", fontParagraphTitle);
 			var summaryPhrase = new Phrase(authorSummary + ".", fontParagraph);
 
@@ -143,8 +143,12 @@ public class AuthorServiceAdapter implements AuthorService {
 			bodyParagraph.setLeading(22);
 			bodyParagraph.add(Chunk.NEWLINE);
 			bodyParagraph.add(Chunk.NEWLINE);
-			document.add(bodyParagraph);
-		}
+			try {
+				document.add(bodyParagraph);
+			} catch (DocumentException e) {
+				throw new RuntimeException(e);
+			}
+		});
 
 		document.close();
 		out.close();
