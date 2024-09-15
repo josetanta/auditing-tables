@@ -1,7 +1,7 @@
-logging:
-  level:
-    org:
-      hibernate: INFO
+#logging:
+#  level:
+#    org:
+#      hibernate: INFO
 
 server:
   servlet:
@@ -10,7 +10,7 @@ server:
 spring:
   application:
     name: auditing-entities
-    
+
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:xe
     username: BLOG
@@ -24,7 +24,7 @@ spring:
     database: oracle
     properties:
       hibernate:
-        generate_statistics: true
+        #        generate_statistics: true
         format_sql: true
     open-in-view: false
         
