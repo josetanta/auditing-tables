@@ -13,6 +13,6 @@ public class SoapClient extends WebServiceGatewaySupport {
 		addRequest.setIntB(b);
 
 		var soapActionCallback = new SoapActionCallback("http://tempuri.org/Add");
-		return (AddResponse) getWebServiceTemplate().marshalSendAndReceive("http://www.dneonline.com/calculator.asmx", addRequest, soapActionCallback);
+		return (AddResponse) getWebServiceTemplate().marshalSendAndReceive("http://www.dneonline.com/calculator.asmx?wsdl", addRequest, soapActionCallback);
 	}
 }
