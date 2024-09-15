@@ -1,9 +1,8 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.mappers;
 
+import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 import org.mapstruct.Context;
 import org.springframework.data.domain.Page;
-
-import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public interface AbstractMapper<M, D> {
 
 	List<D> toDto(List<M> domains, @Context CycleAvoidingMappingContext context);
 
-	default Page<D> mapToDto(Page<M> domains, @Context CycleAvoidingMappingContext context) {
+	default Page<D> toDto(Page<M> domains, @Context CycleAvoidingMappingContext context) {
 		return domains.map(domain -> toDto(domain, context));
 	}
 
