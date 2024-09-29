@@ -1,0 +1,15 @@
+stages:
+  - test
+  - build
+
+job-test:
+  image: maven:3.9.5-amazoncorretto-17-debian
+  stage: test
+  script:
+    - ./mvnw clean test
+
+job-build:
+  image: maven:3.9.5-amazoncorretto-17-debian
+  stage: build
+  script:
+    - ./mvnw clean install
