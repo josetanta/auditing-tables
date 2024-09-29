@@ -219,6 +219,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <skipXjc>true</skipXjc>
                     <sourceType>wsdl</sourceType>
                     <verbose>true</verbose>
                     <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
