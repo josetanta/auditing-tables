@@ -9,6 +9,9 @@ import org.mapstruct.*;
 public interface AuthorMapper extends AbstractMapper<Author, AuthorDTO> {
 
 	@Override
+	@Mappings({
+		@Mapping(target = "active", expression = "java(dto.active() ? \"Y\" : \"N\")")
+	})
 	Author toModel(AuthorDTO dto, @Context CycleAvoidingMappingContext context);
 
 	@Override
