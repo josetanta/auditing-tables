@@ -1,7 +1,7 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.repository;
 
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Subscription;
-import edu.systemia.auditing_entities.infrastructure.persistence.repository.views.SubscriptionView;
+import edu.systemia.auditing_entities.infrastructure.persistence.repository.projections.SubscriptionView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,7 +1,7 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.repository;
 
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
-import edu.systemia.auditing_entities.infrastructure.persistence.repository.views.AuthorView;
+import edu.systemia.auditing_entities.infrastructure.persistence.repository.projections.AuthorView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

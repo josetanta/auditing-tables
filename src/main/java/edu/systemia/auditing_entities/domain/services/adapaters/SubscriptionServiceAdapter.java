@@ -2,7 +2,7 @@ package edu.systemia.auditing_entities.domain.services.adapaters;
 
 import edu.systemia.auditing_entities.domain.services.SubscriptionService;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.SubscriptionRepository;
-import edu.systemia.auditing_entities.infrastructure.persistence.repository.views.SubscriptionView;
+import edu.systemia.auditing_entities.infrastructure.persistence.repository.projections.SubscriptionView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,6 @@
 package edu.systemia.auditing_entities.domain.services;
 
-import edu.systemia.auditing_entities.infrastructure.persistence.repository.views.SubscriptionView;
+import edu.systemia.auditing_entities.infrastructure.persistence.repository.projections.SubscriptionView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.lang.NonNull;

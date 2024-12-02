@@ -12,25 +12,35 @@ spring:
     name: auditing-entities
 
   datasource:
-    primary:
-      url: jdbc:oracle:thin:@localhost:1521:xe
+    oracle:
+      jdbcUrl: jdbc:oracle:thin:@localhost:1521:xe
       username: BLOG
       password: BLOG
       driver-class-name: oracle.jdbc.OracleDriver
-    secondary:
-      url: jdbc:mariadb://localhost:3306/audit_db
+    mariadb:
+      jdbcUrl: jdbc:mariadb://localhost:3306/audit_db
       username: blog
       password: blog
       driver-class-name: org.mariadb.jdbc.Driver
+
   
   jpa:
-    #    hibernate:
-    #      ddl-auto: update
+    hibernate:
+      ddl-auto: update
     show-sql: true
-    database: oracle
+    database: mysql
     properties:
       hibernate:
-        #        generate_statistics: true
+        # generate_statistics: true
         format_sql: true
     open-in-view: false
-        
+
+#logging:
+#  level:
+#    org:
+#      hibernate: DEBUG
+#      springframework.orm.jpa: DEBUG
+
+# ORACLE or MARIADB
+use-database:
+  datasource: MARIADB

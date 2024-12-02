@@ -1,4 +1,4 @@
-package edu.systemia.auditing_entities.infrastructure.persistence.repository.views;
+package edu.systemia.auditing_entities.infrastructure.persistence.repository.projections;
 
 import java.time.LocalDateTime;
 

@@ -4,6 +4,7 @@ import edu.systemia.auditing_entities.domain.services.SubscriptionService;
 import edu.systemia.auditing_entities.infrastructure.dto.SubscriptionDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Course;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Subscription;
+import edu.systemia.auditing_entities.infrastructure.persistence.mappers.SubscriptionMapper;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.CourseRepository;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class CourseAPIRest {
 
 	private final CourseRepository courseRepository;
 	private final SubscriptionRepository subsRepository;
-	// private final SubscriptionMapper mapper;
+	private final SubscriptionMapper mapper;
 	private final SubscriptionService service;
 
 	@PostMapping
@@ -53,15 +54,14 @@ public class CourseAPIRest {
 	@PostMapping(path = "/subscription")
 	public ResponseEntity<Object> postRegisterSubscription(@RequestBody SubscriptionDTO dto) {
 
-		// if (!verifyAllAttrsIfNotNull(params))
-		// return ResponseEntity.badRequest().body("Error");
+		//		if (!AppUtils.verifyAllAttrsIfNotNull(params))
+		//			return ResponseEntity.badRequest().body("Error");
 
-		// var subs = Subscription.builder()
-		// .author(Author.builder().id(params.authorID()).build())
-		// .course(Course.builder().id(params.courseID()).build()).build();
-		// var subs = mapper.toSubscription(dto);
-		// var saveSubs = subsRepository.save(subs);
-		// return ResponseEntity.created(URI.create("")).body(saveSubs.getId());
+		//		var subs = Subscription.builder()
+		//			.author(Author.builder().id(dto.author().id()).build())
+		//			.course(Course.builder().id(dto.course().id()).build()).build();
+		//		var saveSubs = subsRepository.save(mapper.toSubscription(dto));
+		//		return ResponseEntity.created(URI.create("")).body(saveSubs.getId());
 		return ResponseEntity.ok().build();
 	}
 
