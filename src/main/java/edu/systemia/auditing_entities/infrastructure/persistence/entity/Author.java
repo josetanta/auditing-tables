@@ -30,12 +30,6 @@ public class Author extends EntityBase implements Serializable {
 	@Column(name = "AT_LASTNAME", length = 100)
 	private String lastname;
 
-	// @ManyToMany
-	// @JoinTable(name = "COURSE_AUTHORS",
-	// joinColumns = @JoinColumn(name = "AT_ID"),
-	// inverseJoinColumns = @JoinColumn(name = "CO_ID")
-	// )
-	// Set<Course> courses;
 	@OneToMany(mappedBy = "author")
 	@ToString.Exclude
 	private List<Subscription> subscriptions;

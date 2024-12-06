@@ -1,6 +1,8 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.entity;
 
+import edu.systemia.auditing_entities.infrastructure.persistence.listeners.StatusListener;
 import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
+@EntityListeners(StatusListener.class)
 public class EntityBase implements Serializable {
 
 	@Serial
