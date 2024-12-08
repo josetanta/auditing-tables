@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@SuperBuilder
 @Entity
 @Table(name = "BLOG_AUTHORS")
 @EntityListeners(AuditingEntityListener.class)

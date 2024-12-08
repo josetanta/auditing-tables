@@ -125,7 +125,9 @@ public class AuthorAPIRest {
 		@RequestBody NoteDTO noteDTO
 	) {
 		Note noteEntity = noteMapper.toModel(noteDTO, new CycleAvoidingMappingContext());
-		noteEntity.setAuthor(Author.builder().id(authorId).build());
+		Author author = new Author();
+		author.setId(authorId);
+		noteEntity.setAuthor(author);
 		Note result = noteRepository.save(noteEntity);
 		log.info("Note created {}", result.getId());
 		return ResponseEntity.ok(result.getId());
