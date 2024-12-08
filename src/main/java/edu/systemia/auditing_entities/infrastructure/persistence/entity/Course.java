@@ -1,17 +1,13 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Builder
 @AllArgsConstructor
@@ -30,8 +26,6 @@ public class Course implements Serializable {
 	@Column(name = "CO_ID", precision = 19)
 	private Long id;
 
-	// @ManyToMany(mappedBy = "courses")
-	// Set<Author> authors;
 	@Column(name = "CO_NAME", length = 100)
 	private String name;
 
@@ -41,5 +35,7 @@ public class Course implements Serializable {
 	@JsonIgnore
 	@Builder.Default
 	@OneToMany(mappedBy = "course", orphanRemoval = true)
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	Set<Subscription> subscriptions = new HashSet<>();
 }

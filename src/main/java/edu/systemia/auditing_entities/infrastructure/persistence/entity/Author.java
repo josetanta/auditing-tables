@@ -32,9 +32,11 @@ public class Author extends EntityBase implements Serializable {
 
 	@OneToMany(mappedBy = "author")
 	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private List<Subscription> subscriptions;
 
 	@OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
 	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private List<Note> notes;
 }

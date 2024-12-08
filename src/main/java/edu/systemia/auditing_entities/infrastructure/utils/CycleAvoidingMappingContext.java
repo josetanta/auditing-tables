@@ -15,8 +15,8 @@ public class CycleAvoidingMappingContext {
 
 	@BeforeMapping
 	public <T> T getMappedInstance(Object source, @TargetType Class<T> targetType) {
-		return targetType.cast(knownInstances.get(source));
-		// return (T) knownInstances.get(source);
+		//		return targetType.cast(knownInstances.get(source));
+		return (T) knownInstances.get(source);
 	}
 
 	@BeforeMapping

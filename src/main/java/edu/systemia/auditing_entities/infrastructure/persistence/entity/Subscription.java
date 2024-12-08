@@ -30,12 +30,14 @@ public class Subscription implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "AT_ID")
 	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private Author author;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "CO_ID")
 	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private Course course;
 
 	@Column(name = "CREATE_AT", nullable = false, updatable = false)

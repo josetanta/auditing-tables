@@ -13,7 +13,7 @@ spring:
 
   datasource:
     oracle:
-      jdbcUrl: jdbc:oracle:thin:@localhost:1521:xe
+      jdbcUrl: jdbc:oracle:thin:@localhost:51521:xe
       username: BLOG
       password: BLOG
       driver-class-name: oracle.jdbc.OracleDriver
@@ -26,14 +26,14 @@ spring:
   
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
-    database: mysql
+    database: oracle # oracle or mysql
     properties:
       hibernate:
         # generate_statistics: true
         format_sql: true
-    open-in-view: false
+    open-in-view: true
 
 #logging:
 #  level:
@@ -43,4 +43,4 @@ spring:
 
 # ORACLE or MARIADB
 use-database:
-  datasource: MARIADB
+  datasource: ORACLE
