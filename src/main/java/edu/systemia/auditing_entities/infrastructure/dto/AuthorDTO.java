@@ -1,5 +1,7 @@
 package edu.systemia.auditing_entities.infrastructure.dto;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,6 +13,8 @@ public record AuthorDTO(
 	LocalDateTime createdAt,
 	LocalDateTime updatedAt,
 	List<SubscriptionDTO> subscriptions,
+
+	@JsonManagedReference
 	List<NoteDTO> notes
 ) {
 

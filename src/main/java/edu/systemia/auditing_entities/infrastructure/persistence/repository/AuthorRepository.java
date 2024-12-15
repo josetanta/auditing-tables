@@ -14,5 +14,4 @@ public interface AuthorRepository extends JpaRepository<Author, Long>, JpaSpecif
 	String getProcedureSeqValue();
 
 	Page<AuthorView> findAllByFirstnameContaining(Pageable pageable, String firstname);
-
 }

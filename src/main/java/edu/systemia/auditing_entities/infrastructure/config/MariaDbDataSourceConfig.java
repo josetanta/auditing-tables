@@ -27,17 +27,17 @@ import java.util.HashMap;
 @ConditionalOnProperty(prefix = "use-database", name = "datasource", havingValue = "MARIADB", matchIfMissing = true)
 public class MariaDbDataSourceConfig {
 
-	@Bean(name = "mariaDataSource")
-	@ConfigurationProperties(prefix = "spring.datasource.mariadb")
-	public DataSource dataSource() {
+    @Bean(name = "mariaDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.mariadb")
+    DataSource dataSource() {
 		return DataSourceBuilder.create().build();
 	}
 
-	@Bean(name = "mariaEntityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-		EntityManagerFactoryBuilder builder,
-		@Qualifier("mariaDataSource") DataSource dataSource
-	) {
+    @Bean(name = "mariaEntityManagerFactory")
+    LocalContainerEntityManagerFactoryBean entityManagerFactory(
+        EntityManagerFactoryBuilder builder,
+        @Qualifier("mariaDataSource") DataSource dataSource
+    ) {
 		var properties = new HashMap<String, Object>();
 		properties.put("hibernate.hbm2ddl.auto", "none");
 		return builder.dataSource(dataSource)
@@ -47,11 +47,11 @@ public class MariaDbDataSourceConfig {
 			.build();
 	}
 
-	@Bean(name = "mariaTransactionManager")
-	public PlatformTransactionManager transactionManager(
-		@Qualifier("mariaEntityManagerFactory")
-		EntityManagerFactory entityManager
-	) {
+    @Bean(name = "mariaTransactionManager")
+    PlatformTransactionManager transactionManager(
+        @Qualifier("mariaEntityManagerFactory")
+        EntityManagerFactory entityManager
+    ) {
 		return new JpaTransactionManager(entityManager);
 	}
 

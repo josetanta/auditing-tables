@@ -1,7 +1,9 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.entity;
 
+import edu.systemia.auditing_entities.infrastructure.persistence.converters.StringYNToBooleanConverter;
 import edu.systemia.auditing_entities.infrastructure.persistence.listeners.StatusListener;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -39,5 +41,6 @@ public class EntityBase implements Serializable {
 	private LocalDateTime deactivateAt;
 
 	@Column(name = "E_ACTIVE", length = 1, nullable = false)
-	private String active;
+	@Convert(converter = StringYNToBooleanConverter.class)
+	private Boolean active;
 }

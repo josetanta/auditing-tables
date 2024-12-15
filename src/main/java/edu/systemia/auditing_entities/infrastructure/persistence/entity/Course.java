@@ -15,6 +15,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "BLOG_COURSES")
+@Cacheable
 public class Course implements Serializable {
 
 	@Serial

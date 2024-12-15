@@ -1,0 +1,10 @@
+services:
+  jboss:
+    build:
+      context: .
+      dockerfile: ./compose/jboss/Dockerfile
+    image: jboss_prod
+    container_name: jboss_container_prod
+    ports:
+      - "8080:8080"
+      - "9990:9990"

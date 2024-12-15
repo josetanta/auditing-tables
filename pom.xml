@@ -44,6 +44,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
 
         <!--		<dependency>-->
@@ -116,6 +127,7 @@
     </dependencies>
 
     <build>
+        <finalName>deploy</finalName>
         <plugins>
             <plugin>
                 <groupId>org.hibernate.orm.tooling</groupId>

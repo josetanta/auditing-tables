@@ -101,6 +101,17 @@ public class AuthorAPIRest {
 		return ResponseEntity.ok(authors);
 	}
 
+
+	@GetMapping(path = "/author-view-dto")
+	public ResponseEntity<Object> getAuthorViewDTO(
+		Pageable pageable
+	) {
+		var authors = authorRepository.findAll(pageable);
+		Page<AuthorDTO> result = mapper.toDto(authors, new CycleAvoidingMappingContext());
+		log.info("Pagination of authors");
+		return ResponseEntity.ok(result);
+	}
+
 	@GetMapping(path = "/author-dto-view")
 	public ResponseEntity<Object> getAuthorDTOViewAll(@PageableDefault(size = 5) Pageable pageable,
 		@RequestParam String firstname) {

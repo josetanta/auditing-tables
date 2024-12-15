@@ -28,18 +28,18 @@ import java.util.HashMap;
 @ConditionalOnProperty(prefix = "use-database", name = "datasource", havingValue = "ORACLE", matchIfMissing = true)
 public class OracleDataSourceConfig {
 
-	@Primary
-	@Bean(name = "oracleDataSource")
-	@ConfigurationProperties(prefix = "spring.datasource.oracle")
-	public DataSource dataSource() {
+    @Primary
+    @Bean(name = "oracleDataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.oracle")
+    DataSource dataSource() {
 		return DataSourceBuilder.create().build();
 	}
 
-	@Bean(name = "oracleEntityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
-		EntityManagerFactoryBuilder builder,
-		@Qualifier("oracleDataSource") DataSource dataSource
-	) {
+    @Bean(name = "oracleEntityManagerFactory")
+    LocalContainerEntityManagerFactoryBean entityManagerFactory(
+        EntityManagerFactoryBuilder builder,
+        @Qualifier("oracleDataSource") DataSource dataSource
+    ) {
 		var properties = new HashMap<String, Object>();
 		properties.put("hibernate.hbm2ddl.auto", "none");
 		return builder.dataSource(dataSource)
@@ -49,11 +49,11 @@ public class OracleDataSourceConfig {
 			.build();
 	}
 
-	@Bean(name = "oracleTransactionManager")
-	public PlatformTransactionManager transactionManager(
-		@Qualifier("oracleEntityManagerFactory")
-		EntityManagerFactory entityManager
-	) {
+    @Bean(name = "oracleTransactionManager")
+    PlatformTransactionManager transactionManager(
+        @Qualifier("oracleEntityManagerFactory")
+        EntityManagerFactory entityManager
+    ) {
 		return new JpaTransactionManager(entityManager);
 	}
 

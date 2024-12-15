@@ -34,7 +34,7 @@ public class Note implements Serializable {
 	@CreatedDate
 	private LocalDateTime createdAt;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "AT_ID")
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude

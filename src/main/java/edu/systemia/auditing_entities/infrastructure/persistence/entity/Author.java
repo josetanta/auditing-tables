@@ -2,7 +2,6 @@ package edu.systemia.auditing_entities.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
@@ -15,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "BLOG_AUTHORS")
 @EntityListeners(AuditingEntityListener.class)
+@Cacheable
 public class Author extends EntityBase implements Serializable {
 
 	@Id

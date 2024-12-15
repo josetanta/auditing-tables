@@ -5,21 +5,19 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
-
 @Slf4j
 public class StatusListener {
 
 	@PrePersist
 	public void beforePersist(EntityBase entityBase) {
-		entityBase.setActivateAt(LocalDateTime.now());
+		//		entityBase.setActivateAt(LocalDateTime.now());
 		log.info("Date activation ON");
 	}
 
 	@PreUpdate
 	public void beforeUpdate(EntityBase entityBase) {
-		if (entityBase.getActive().equalsIgnoreCase("N")) {
-			entityBase.setDeactivateAt(LocalDateTime.now());
-		}
+		//		if (entityBase.getActive().equalsIgnoreCase("N")) {
+		//			entityBase.setDeactivateAt(LocalDateTime.now());
+		//		}
 	}
 }

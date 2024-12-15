@@ -1,0 +1,10 @@
+<jboss-deployment-structure>
+    <deployment>
+        <exclude-subsystems>
+            <subsystem name="hibernate" />
+        </exclude-subsystems>
+        <exclude>
+            <module name="org.hibernate" />
+        </exclude>
+    </deployment>
+</jboss-deployment-structure>

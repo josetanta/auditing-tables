@@ -6,8 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
 @Mapper(
-	componentModel = MappingConstants.ComponentModel.SPRING,
-	uses = {AuthorMapper.class}
+	componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface NoteMapper extends AbstractMapper<Note, NoteDTO> {
 
