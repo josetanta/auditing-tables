@@ -17,3 +17,7 @@ job-build:
   stage: build
   script:
     - ./mvnw clean install
+
+  artifacts:
+    paths:
+      - deploy/auditing-tables.war
