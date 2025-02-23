@@ -20,4 +20,4 @@ job-build:
 
   artifacts:
     paths:
-      - deploy/auditing-tables.war
+      - deploy/
