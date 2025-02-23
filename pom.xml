@@ -35,6 +35,7 @@
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <org.lombok.version>1.18.30</org.lombok.version>
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <application.name>auditing-tables</application.name>
     </properties>
     <dependencies>
         <dependency>
@@ -127,7 +128,7 @@
     </dependencies>
 
     <build>
-        <finalName>deploy</finalName>
+        <finalName>${application.name}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.hibernate.orm.tooling</groupId>
@@ -254,6 +255,34 @@
                     </sources>
                     <clearOutputDir>false</clearOutputDir>
                 </configuration>
+            </plugin>
+
+            <!-- Maven Resources Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-jar</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/deploy</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}</directory>
+                                    <includes>
+                                        <include>*.jar</include>
+                                        <include>*.war</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

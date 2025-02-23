@@ -34,3 +34,7 @@ build/
 
 out
 */**/META-INF
+
+### WAR
+deploy
+deploy/*
