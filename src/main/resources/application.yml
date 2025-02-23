@@ -12,6 +12,7 @@ spring:
     name: auditing-entities
 
   datasource:
+    # jndi-name: java:comp/env/jdbc/AuditingSource
     oracle:
       jdbcUrl: jdbc:oracle:thin:@localhost:51521:xe
       username: BLOG
@@ -29,10 +30,13 @@ spring:
       ddl-auto: none
     show-sql: true
     database: oracle # oracle or mysql
+    database-platform: org.hibernate.dialect.OracleDialect
     properties:
       hibernate:
         # generate_statistics: true
         format_sql: true
+        session_factory:
+          interceptor: edu.systemia.auditing_entities.infrastructure.persistence.interceptors.AppInterceptor
     open-in-view: true
 
 #logging:
