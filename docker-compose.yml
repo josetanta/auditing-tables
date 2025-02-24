@@ -1,10 +1,12 @@
 services:
   jboss:
-    build:
-      context: .
-      dockerfile: ./compose/jboss/Dockerfile
-    image: jboss_prod
+    image: bitnami/wildfly:35.0.1
     container_name: jboss_container_prod
+    environment:
+      WILDFLY_USERNAME: user
+      WILDFLY_PASSWORD: user1234
     ports:
       - "8080:8080"
       - "9990:9990"
+    volumes:
+      - ./compose/jboss/standalone-full.xml:/bitnami/wildfly/configuration/standalone.xml:ro

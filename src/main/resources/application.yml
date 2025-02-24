@@ -12,7 +12,7 @@ spring:
     name: auditing-entities
 
   datasource:
-    # jndi-name: java:comp/env/jdbc/AuditingSource
+    jndi-name: java:/blog_DS
     oracle:
       jdbcUrl: jdbc:oracle:thin:@localhost:51521:xe
       username: BLOG
