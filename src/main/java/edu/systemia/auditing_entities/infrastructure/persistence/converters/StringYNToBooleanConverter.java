@@ -10,7 +10,7 @@ public class StringYNToBooleanConverter implements AttributeConverter<Boolean, S
 
 	@Override
 	public String convertToDatabaseColumn(Boolean attribute) {
-		return !Objects.isNull(attribute) ? (Boolean.TRUE.equals(attribute) ? "Y" : "N") : null;
+		return !Objects.isNull(attribute) ? (attribute ? "Y" : "N") : null;
 	}
 
 	@Override

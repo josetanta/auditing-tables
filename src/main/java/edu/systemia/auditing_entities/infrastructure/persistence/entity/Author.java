@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serializable;
 import java.util.List;
 
+@Builder
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
@@ -18,7 +19,7 @@ import java.util.List;
 public class Author extends EntityBase implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUTHORS_SEQUENCE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "AUTHORS_SEQUENCE")
 	@SequenceGenerator(name = "AUTHORS_SEQUENCE", sequenceName = "BLOG_AUTHOR_SEQ", allocationSize = 1)
 	@Column(name = "AT_ID", precision = 19)
 	private Long id;

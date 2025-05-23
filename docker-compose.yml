@@ -1,6 +1,6 @@
 services:
   jboss:
-    image: bitnami/wildfly:35.0.1
+    image: quay.io/wildfly/wildfly:28.0.0.Final-jdk17
     container_name: jboss_container_prod
     environment:
       WILDFLY_USERNAME: user
@@ -8,5 +8,5 @@ services:
     ports:
       - "8080:8080"
       - "9990:9990"
-    volumes:
-      - ./compose/jboss/standalone-full.xml:/bitnami/wildfly/configuration/standalone.xml:ro
+    # volumes:
+    #  - ./compose/jboss/standalone-full.xml:/bitnami/wildfly/configuration/standalone.xml:ro

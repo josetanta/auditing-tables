@@ -10,11 +10,14 @@ server:
 spring:
   application:
     name: auditing-entities
+  jackson:
+    time-zone: Europe/Paris
+    property-naming-strategy: LOWER_CAMEL_CASE
 
   datasource:
     jndi-name: java:/blog_DS
     oracle:
-      jdbcUrl: jdbc:oracle:thin:@localhost:51521:xe
+      jdbcUrl: jdbc:oracle:thin:@localhost:49165:xe
       username: BLOG
       password: BLOG
       driver-class-name: oracle.jdbc.OracleDriver
@@ -37,7 +40,7 @@ spring:
         format_sql: true
         session_factory:
           interceptor: edu.systemia.auditing_entities.infrastructure.persistence.interceptors.AppInterceptor
-    open-in-view: true
+#    open-in-view: true
 
 #logging:
 #  level:

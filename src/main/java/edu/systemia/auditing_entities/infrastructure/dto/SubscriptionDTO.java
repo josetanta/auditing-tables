@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 public record SubscriptionDTO(
 	Long id,
 	LocalDateTime createdAt,
-	AuthorDTO author,
-	CourseDTO course
+	Long authorId,
+	Long courseId
 ) {
 
 }

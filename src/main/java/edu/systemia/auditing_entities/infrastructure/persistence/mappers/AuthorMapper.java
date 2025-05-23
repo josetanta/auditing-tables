@@ -3,7 +3,9 @@ package edu.systemia.auditing_entities.infrastructure.persistence.mappers;
 import edu.systemia.auditing_entities.infrastructure.dto.AuthorDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
 import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
-import org.mapstruct.*;
+import org.mapstruct.Context;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 
 @Mapper(
 	componentModel = MappingConstants.ComponentModel.SPRING,
@@ -15,10 +17,6 @@ import org.mapstruct.*;
 public interface AuthorMapper extends AbstractMapper<Author, AuthorDTO> {
 
 	@Override
-	@Mappings({
-		@Mapping(target = "activateAt", ignore = true),
-		@Mapping(target = "deactivateAt", ignore = true)
-	})
 	Author toModel(AuthorDTO dto, @Context CycleAvoidingMappingContext context);
 
 	@Override

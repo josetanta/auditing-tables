@@ -2,11 +2,13 @@ package edu.systemia.auditing_entities.application.rest;
 
 import edu.systemia.auditing_entities.domain.services.SubscriptionService;
 import edu.systemia.auditing_entities.infrastructure.dto.SubscriptionDTO;
+import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Course;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Subscription;
 import edu.systemia.auditing_entities.infrastructure.persistence.mappers.SubscriptionMapper;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.CourseRepository;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.SubscriptionRepository;
+import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,8 +28,9 @@ public class CourseAPIRest {
 
 	private final CourseRepository courseRepository;
 	private final SubscriptionRepository subsRepository;
-	private final SubscriptionMapper mapper;
 	private final SubscriptionService service;
+	private final SubscriptionMapper subscriptionMapper;
+	private final CycleAvoidingMappingContext context;
 
 	@PostMapping
 	public ResponseEntity<Course> postCreateCourse(@RequestBody Course course) {
@@ -53,29 +56,23 @@ public class CourseAPIRest {
 
 	@PostMapping(path = "/subscription")
 	public ResponseEntity<Object> postRegisterSubscription(@RequestBody SubscriptionDTO dto) {
-
-		//		if (!AppUtils.verifyAllAttrsIfNotNull(params))
-		//			return ResponseEntity.badRequest().body("Error");
-
-		//		var subs = Subscription.builder()
-		//			.author(Author.builder().id(dto.author().id()).build())
-		//			.course(Course.builder().id(dto.course().id()).build()).build();
-		//		var saveSubs = subsRepository.save(mapper.toSubscription(dto));
-		//		return ResponseEntity.created(URI.create("")).body(saveSubs.getId());
-		return ResponseEntity.ok().build();
+		var subs = Subscription.builder()
+			.author(Author.builder().id(dto.authorId()).build())
+			.course(Course.builder().id(dto.courseId()).build())
+			.build();
+		var saveSubs = subsRepository.save(subs);
+		return ResponseEntity.created(URI.create("")).body(saveSubs.getId());
 	}
 
 	@GetMapping("/subscription")
-	public ResponseEntity<Page<Subscription>> getSubscription(Pageable pageable) {
-		var result = subsRepository.findAll(pageable);
+	public ResponseEntity<Page<SubscriptionDTO>> getSubscription(Pageable pageable) {
+		var result = subscriptionMapper.toDto(subsRepository.findAll(pageable), context);
+
 		return ResponseEntity.ok(result);
 	}
 
 	@GetMapping("/subscription-view")
 	public ResponseEntity<Object> getPageSubscriptionView(Pageable pageable, @RequestParam Long id) {
-		// var result = subsRepository.findAllByAuthor_Id(pageable, id);
-		// var result = subsRepository.findAllByAuthor_Id(pageable, id, SubsSummary.class);
-		// var result = subsRepository.findAllSubscriptions(pageable, id);
 		var result = service.findAllSubscription(pageable, id);
 		return ResponseEntity.ok(result);
 	}

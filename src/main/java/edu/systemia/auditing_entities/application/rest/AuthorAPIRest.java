@@ -38,10 +38,10 @@ public class AuthorAPIRest {
 	private final AuthorService authorService;
 	private final AuthorMapper mapper;
 	private final NoteMapper noteMapper;
+	private final CycleAvoidingMappingContext cycleAvoid;
 
-	@PostMapping
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<AuthorDTO> postCreateAuthor(@RequestBody AuthorDTO dto) {
-		final var cycleAvoid = new CycleAvoidingMappingContext();
 		var author = mapper.toModel(dto, cycleAvoid);
 		var authorSaved = authorRepository.save(author);
 		var authorDTO = mapper.toDto(authorSaved, cycleAvoid);
@@ -51,11 +51,11 @@ public class AuthorAPIRest {
 	@PutMapping
 	public ResponseEntity<AuthorDTO> putUpdateAuthor(@RequestBody AuthorDTO dto) {
 
-		if (Objects.isNull(dto.id())) {
+		if (Objects.isNull(dto.getId())) {
 			return ResponseEntity.badRequest().build();
 		}
 
-		if (!authorRepository.existsById(dto.id())) {
+		if (!authorRepository.existsById(dto.getId())) {
 			return ResponseEntity.notFound().build();
 		}
 

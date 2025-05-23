@@ -1,17 +1,17 @@
 package edu.systemia.auditing_entities.infrastructure.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-public record NoteDTO(
-	Long id,
-	Integer notePartial,
-	LocalDateTime createdAt,
+@Data
+public class NoteDTO {
+	private Long id;
+	private Integer notePartial;
+	private LocalDateTime createdAt;
 
-	@JsonBackReference
-	AuthorDTO author
+	@JsonBackReference("author-notes")
+	private AuthorDTO author;
 	// Long authorID
-) {
-
 }
