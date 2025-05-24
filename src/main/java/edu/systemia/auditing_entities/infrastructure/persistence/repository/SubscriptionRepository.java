@@ -5,8 +5,9 @@ import edu.systemia.auditing_entities.infrastructure.persistence.repository.proj
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
+public interface SubscriptionRepository extends JpaRepository<Subscription, Long>, JpaSpecificationExecutor<Subscription> {
 
 	Page<SubscriptionView> findAllByAuthor_Id(Pageable pageable, Long id);
 

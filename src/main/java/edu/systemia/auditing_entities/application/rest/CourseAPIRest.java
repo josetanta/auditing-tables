@@ -69,9 +69,13 @@ public class CourseAPIRest {
 	@GetMapping("/subscription")
 	public ResponseEntity<Page<SubscriptionDTO>> getSubscription(
 		Pageable pageable,
-		@RequestParam(name = "f-created", required = false) LocalDateTime fCreated
+		@RequestParam(name = "f-created", required = false)
+		LocalDateTime fCreated
 	) {
-		var result = subscriptionMapper.toDto(subsRepository.findAll(pageable), context);
+		Specification<Subscription> spec = (root, query, cb) ->
+			cb.greaterThanOrEqualTo(root.get("createdAt"), fCreated);
+
+		var result = subscriptionMapper.toDto(subsRepository.findAll(spec, pageable), context);
 		log.info("Info date filtering {}", fCreated);
 		return ResponseEntity.ok(result);
 	}

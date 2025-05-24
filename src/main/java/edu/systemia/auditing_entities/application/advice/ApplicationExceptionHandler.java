@@ -15,11 +15,13 @@ import java.net.URI;
 public class ApplicationExceptionHandler {
 
 	@ExceptionHandler({ DataIntegrityViolationException.class })
-	public ProblemDetail handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+	public AppProblemDetail handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
 		log.error("Description DataIntegrityViolationException error {}", ex.getMessage());
-		var problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "integrity constraint");
+		var problem = AppProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "integrity constraint");
 		problem.setType(URI.create("https://stackoverflow.com/questions/57324966/issue-with-pk-violation-on-insert"));
 		problem.setTitle("database problem");
+		problem.setTitleStatus(HttpStatus.CONFLICT.name());
+		problem.setLanguage("ES");
 		return problem;
 	}
 
