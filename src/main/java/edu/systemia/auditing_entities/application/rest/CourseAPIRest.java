@@ -13,11 +13,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -65,9 +67,12 @@ public class CourseAPIRest {
 	}
 
 	@GetMapping("/subscription")
-	public ResponseEntity<Page<SubscriptionDTO>> getSubscription(Pageable pageable) {
+	public ResponseEntity<Page<SubscriptionDTO>> getSubscription(
+		Pageable pageable,
+		@RequestParam(name = "f-created", required = false) LocalDateTime fCreated
+	) {
 		var result = subscriptionMapper.toDto(subsRepository.findAll(pageable), context);
-
+		log.info("Info date filtering {}", fCreated);
 		return ResponseEntity.ok(result);
 	}
 

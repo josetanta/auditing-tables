@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.net.URI;
 
@@ -14,12 +15,22 @@ import java.net.URI;
 public class ApplicationExceptionHandler {
 
 	@ExceptionHandler({ DataIntegrityViolationException.class })
-	public ProblemDetail handleException(DataIntegrityViolationException ex) {
-		log.error("Description error {}", ex.getMessage());
+	public ProblemDetail handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+		log.error("Description DataIntegrityViolationException error {}", ex.getMessage());
 		var problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, "integrity constraint");
 		problem.setType(URI.create("https://stackoverflow.com/questions/57324966/issue-with-pk-violation-on-insert"));
 		problem.setTitle("database problem");
 		return problem;
 	}
 
+	@ExceptionHandler({ MethodArgumentTypeMismatchException.class })
+	public AppProblemDetail handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+		log.error("Description MethodArgumentTypeMismatchException error {}", ex.getMessage());
+		var problem = AppProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+		problem.setType(URI.create("https://stackoverflow.com/questions/57324966/issue-with-pk-violation-on-insert"));
+		problem.setTitle("bad Request");
+		problem.setTitleStatus(HttpStatus.BAD_REQUEST.name());
+		problem.setLanguage("ES");
+		return problem;
+	}
 }
