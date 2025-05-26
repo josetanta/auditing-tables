@@ -1,13 +1,26 @@
+image: maven:3.9.5-amazoncorretto-17-debian
+
 workflow:
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
 
 stages:
+  - verify
+  - compile
   - test
   - build
 
+job-verify:
+  stage: compile
+  script:
+    - ./mvnw clean compile
+
+job-compile:
+  stage: compile
+  script:
+    - ./mvnw clean compile
+
 job-test:
-  image: maven:3.9.5-amazoncorretto-17-debian
   stage: test
   script:
     - ./mvnw clean test
@@ -19,7 +32,6 @@ job-test:
       - target/surefire-reports/
 
 job-build:
-  image: maven:3.9.5-amazoncorretto-17-debian
   stage: build
   script:
     - ./mvnw clean install
