@@ -1,8 +1,4 @@
-name: CI Pipeline
-
-strategy:
-  matrix:
-    java: [ '17' ]
+name: Deploy Application - CI
 
 on:
   push:
