@@ -1,0 +1,56 @@
+name: CI Pipeline
+
+strategy:
+  matrix:
+    java: [ '17' ]
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    container: maven:3.9.5-amazoncorretto-17-debian
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify
+        run: ./mvnw clean compile
+
+  compile:
+    needs: verify
+    runs-on: ubuntu-latest
+    container: maven:3.9.5-amazoncorretto-17-debian
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile
+        run: ./mvnw clean compile
+
+  test:
+    needs: compile
+    runs-on: ubuntu-latest
+    container: maven:3.9.5-amazoncorretto-17-debian
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test
+        run: ./mvnw clean test
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: target/surefire-reports/
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    container: maven:3.9.5-amazoncorretto-17-debian
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: ./mvnw clean install
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: deploy/
