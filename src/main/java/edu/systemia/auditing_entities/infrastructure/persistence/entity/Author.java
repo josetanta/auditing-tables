@@ -2,20 +2,30 @@ package edu.systemia.auditing_entities.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-@Builder
+
+/*
+ * Persistence
+ */
+@Entity
+@Table(name = "BLOG_AUTHORS")
+@EntityListeners(AuditingEntityListener.class)
+// @Cacheable
+
+/*
+ * Lombok
+ */
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "BLOG_AUTHORS")
-@EntityListeners(AuditingEntityListener.class)
-@Cacheable
 public class Author extends EntityBase implements Serializable {
 
 	@Id
@@ -30,13 +40,15 @@ public class Author extends EntityBase implements Serializable {
 	@Column(name = "AT_LASTNAME", length = 100)
 	private String lastname;
 
-	@OneToMany(mappedBy = "author")
+	@OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.PERSIST)
+	@Builder.Default
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	private List<Subscription> subscriptions;
+	private List<Subscription> subscriptions = new ArrayList<>();
 
-	@OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "author", orphanRemoval = true, cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@Builder.Default
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	private List<Note> notes;
+	private List<Note> notes = new ArrayList<>();
 }

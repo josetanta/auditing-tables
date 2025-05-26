@@ -13,6 +13,7 @@ public class AppProblemDetail extends ProblemDetail {
 
 	private String language;
 	private String titleStatus;
+	private String keyTranslate;
 
 	public AppProblemDetail(int rawStatusCode) {
 		super(rawStatusCode);

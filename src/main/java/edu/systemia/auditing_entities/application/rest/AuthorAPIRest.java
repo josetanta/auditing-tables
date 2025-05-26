@@ -1,6 +1,7 @@
 package edu.systemia.auditing_entities.application.rest;
 
 import com.itextpdf.text.DocumentException;
+import edu.systemia.auditing_entities.application.exceptions.ResourceNotFoundException;
 import edu.systemia.auditing_entities.domain.services.AuthorService;
 import edu.systemia.auditing_entities.infrastructure.dto.AuthorDTO;
 import edu.systemia.auditing_entities.infrastructure.dto.NoteDTO;
@@ -40,11 +41,11 @@ public class AuthorAPIRest {
 	private final NoteMapper noteMapper;
 	private final CycleAvoidingMappingContext cycleAvoid;
 
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping
 	public ResponseEntity<AuthorDTO> postCreateAuthor(@RequestBody AuthorDTO dto) {
-		var author = mapper.toModel(dto, cycleAvoid);
-		var authorSaved = authorRepository.save(author);
-		var authorDTO = mapper.toDto(authorSaved, cycleAvoid);
+		var author = mapper.toModel(dto, new CycleAvoidingMappingContext());
+		var authorDTO = mapper.toDto(authorRepository.save(author), cycleAvoid);
+		log.info("Created an user successfully");
 		return ResponseEntity.created(URI.create("")).body(authorDTO);
 	}
 
@@ -59,10 +60,8 @@ public class AuthorAPIRest {
 			return ResponseEntity.notFound().build();
 		}
 
-		final var cycleAvoid = new CycleAvoidingMappingContext();
 		var author = mapper.toModel(dto, cycleAvoid);
-		var authorSaved = authorRepository.save(author);
-		var authorDTO = mapper.toDto(authorSaved, cycleAvoid);
+		var authorDTO = mapper.toDto(authorRepository.save(author), cycleAvoid);
 		return ResponseEntity.ok(authorDTO);
 	}
 
@@ -81,7 +80,7 @@ public class AuthorAPIRest {
 		log.info("Find by {}", id);
 
 		var author = authorRepository.findById(id).orElseThrow();
-		var authorDTO = mapper.toDto(author, new CycleAvoidingMappingContext());
+		var authorDTO = mapper.toDto(author, cycleAvoid);
 		log.info("Results is {}", author);
 
 		return ResponseEntity.ok(authorDTO);
@@ -107,7 +106,7 @@ public class AuthorAPIRest {
 		Pageable pageable
 	) {
 		var authors = authorRepository.findAll(pageable);
-		Page<AuthorDTO> result = mapper.toDto(authors, new CycleAvoidingMappingContext());
+		Page<AuthorDTO> result = mapper.toDto(authors, cycleAvoid);
 		log.info("Pagination of authors");
 		return ResponseEntity.ok(result);
 	}
@@ -135,7 +134,7 @@ public class AuthorAPIRest {
 		@PathVariable("author-id") long authorId,
 		@RequestBody NoteDTO noteDTO
 	) {
-		Note noteEntity = noteMapper.toModel(noteDTO, new CycleAvoidingMappingContext());
+		Note noteEntity = noteMapper.toModel(noteDTO, cycleAvoid);
 		Author author = new Author();
 		author.setId(authorId);
 		noteEntity.setAuthor(author);
@@ -150,8 +149,29 @@ public class AuthorAPIRest {
 		Pageable pageable
 	) {
 		Page<Note> result = noteRepository.getAllByAuthor_Id(pageable, authorId);
-		Page<NoteDTO> resultDTO = result.map(note -> noteMapper.toDto(note, new CycleAvoidingMappingContext()));
+		Page<NoteDTO> resultDTO = result.map(note -> noteMapper.toDto(note, cycleAvoid));
 		log.info("Pagination of NotesDTO");
 		return ResponseEntity.ok(resultDTO);
 	}
+
+	@DeleteMapping("/{author-id}")
+	public ResponseEntity<Object> deleteRemoveAuthorByID(
+		@PathVariable("author-id") Long authorId
+	) {
+
+		if (!authorRepository.existsById(authorId)) {
+			throw new ResourceNotFoundException(
+				"Resource not exist",
+				"es",
+				"ERROR.NOT_FOUND"
+			);
+		}
+
+		authorRepository.deleteById(authorId);
+		log.info("Author with id {} DELETED", authorId);
+
+		return ResponseEntity.noContent()
+			.build();
+	}
+
 }
