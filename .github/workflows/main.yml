@@ -32,7 +32,7 @@ jobs:
         run: ./mvnw clean test
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: target/surefire-reports/
@@ -46,7 +46,7 @@ jobs:
       - name: Build
         run: ./mvnw clean install
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: deploy/
