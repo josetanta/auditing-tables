@@ -11,6 +11,12 @@ job-test:
   stage: test
   script:
     - ./mvnw clean test
+  artifacts:
+    when: always
+    reports:
+      junit: target/surefire-reports/TEST-*.xml
+    paths:
+      - target/surefire-reports/
 
 job-build:
   image: maven:3.9.5-amazoncorretto-17-debian
