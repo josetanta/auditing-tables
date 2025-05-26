@@ -32,7 +32,8 @@ job-test:
         coverage_format: jacoco
         path: target/site/jacoco/jacoco.xml
     paths:
-      - target
+      - target/site/jacoco/
+      - target/surefire-reports/
 
 job-build:
   stage: build
