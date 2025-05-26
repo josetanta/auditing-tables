@@ -23,7 +23,7 @@ job-compile:
 job-test:
   stage: test
   script:
-    - ./mvnw clean test
+    - ./mvnw clean test jacoco:report
   artifacts:
     when: always
     reports:
