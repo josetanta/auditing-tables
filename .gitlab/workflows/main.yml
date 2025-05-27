@@ -11,9 +11,9 @@ stages:
   - build
 
 job-verify:
-  stage: compile
+  stage: verify
   script:
-    - ./mvnw clean compile
+    - ./mvnw clean verify
 
 job-compile:
   stage: compile
