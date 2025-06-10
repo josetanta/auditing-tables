@@ -15,4 +15,11 @@ public class AuthorSpec {
 				cb.like(cb.upper(root.get("firstname")), ("%" + firstname + "%").toUpperCase())
 			).toArray(new Predicate[0]));
 	}
+
+	public static Specification<Author> testJoins() {
+		return (root, query, cb) -> {
+
+			return cb.conjunction();
+		};
+	}
 }
