@@ -29,4 +29,11 @@ public class AuthorSpec {
 			return cb.conjunction();
 		};
 	}
+
+	public static Specification<Author> testJoins() {
+		return (root, query, cb) -> {
+
+			return cb.conjunction();
+		};
+	}
 }
