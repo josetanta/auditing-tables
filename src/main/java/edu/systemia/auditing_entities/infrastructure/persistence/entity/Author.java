@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Author extends EntityBase implements Serializable {
 
+	@Serial
+	private static final long serialVersionUID = -3045399548540220677L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "AUTHORS_SEQUENCE")
 	@SequenceGenerator(name = "AUTHORS_SEQUENCE", sequenceName = "BLOG_AUTHOR_SEQ", allocationSize = 1)

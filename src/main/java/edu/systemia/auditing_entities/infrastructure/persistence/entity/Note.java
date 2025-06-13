@@ -22,7 +22,7 @@ public class Note implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTES_SEQUENCE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "NOTES_SEQUENCE")
 	@SequenceGenerator(name = "NOTES_SEQUENCE", sequenceName = "BLOG_NOTES_SEQ", allocationSize = 1)
 	@Column(name = "NO_ID", precision = 19)
 	private Long id;
