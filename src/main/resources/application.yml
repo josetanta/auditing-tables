@@ -6,6 +6,9 @@
 server:
   servlet:
     context-path: /api/blogs
+    multipart:
+      max-file: 10MB
+      max-request-size: 10MB
 
 spring:
   application:
