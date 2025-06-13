@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.io.IOException;
 import java.net.URI;
 
 @Slf4j
@@ -58,6 +59,17 @@ public class ApplicationExceptionHandler {
 		problem.setTitleStatus(HttpStatus.NOT_FOUND.name());
 		problem.setLanguage(ex.getLanguage());
 		problem.setKeyTranslate(ex.getKeyTranslate());
+		return problem;
+	}
+
+	@ExceptionHandler({ IOException.class })
+	public AppProblemDetail handleIOException(IOException ex) {
+		log.error("Description IOException error {}", ex.getMessage());
+		var problem = AppProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+		problem.setTitle("not found");
+		problem.setTitleStatus(HttpStatus.NOT_FOUND.name());
+		problem.setLanguage(null);
+		problem.setKeyTranslate("ERROR_FILE");
 		return problem;
 	}
 

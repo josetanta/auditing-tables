@@ -22,7 +22,7 @@ public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "COURSES_SEQUENCE")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "COURSES_SEQUENCE")
 	@SequenceGenerator(name = "COURSES_SEQUENCE", sequenceName = "BLOG_COURSE_SEQ", allocationSize = 1)
 	@Column(name = "CO_ID", precision = 19)
 	private Long id;
