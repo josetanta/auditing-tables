@@ -31,18 +31,18 @@ import java.util.HashMap;
 @ConditionalOnProperty(prefix = "use-database", name = "datasource", havingValue = "ORACLE", matchIfMissing = true)
 public class OracleDataSourceConfig {
 
-    @Primary
-    @Bean(name = "oracleDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.oracle")
-    DataSource dataSource() {
+	@Primary
+	@Bean(name = "oracleDataSource")
+	@ConfigurationProperties(prefix = "spring.datasource.oracle")
+	DataSource dataSource() {
 		return DataSourceBuilder.create().build();
 	}
 
-    @Bean(name = "oracleEntityManagerFactory")
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(
-        EntityManagerFactoryBuilder builder,
-        @Qualifier("oracleDataSource") DataSource dataSource
-    ) {
+	@Bean(name = "oracleEntityManagerFactory")
+	LocalContainerEntityManagerFactoryBean entityManagerFactory(
+		EntityManagerFactoryBuilder builder,
+		@Qualifier("oracleDataSource") DataSource dataSource
+	) {
 		var properties = new HashMap<String, Object>();
 		properties.put("hibernate.hbm2ddl.auto", "none");
 		return builder.dataSource(dataSource)
@@ -52,19 +52,19 @@ public class OracleDataSourceConfig {
 			.build();
 	}
 
-    @Bean(name = "oracleTransactionManager")
-    PlatformTransactionManager transactionManager(
-        @Qualifier("oracleEntityManagerFactory")
-        EntityManagerFactory entityManager
-    ) {
+	@Bean(name = "oracleTransactionManager")
+	PlatformTransactionManager transactionManager(
+		@Qualifier("oracleEntityManagerFactory")
+		EntityManagerFactory entityManager
+	) {
 		return new JpaTransactionManager(entityManager);
 	}
-    
-    @Bean(destroyMethod = "")
-    @ConditionalOnProperty(name = "spring.datasource.jndi-name", havingValue = "java:jboss/OracleDS", matchIfMissing =  false)
-    DataSource jndiOracleDSJBOSS() throws NamingException {
-    	final JndiTemplate jndiTemplate = new JndiTemplate();
-    	return jndiTemplate.lookup("java:jboss/OracleDS", DataSource.class);
-    }
+
+	@ConditionalOnProperty(name = "spring.datasource.jndi-name", havingValue = "java:jboss/OracleDS")
+	@Bean(destroyMethod = "")
+	DataSource jndiOracleDSJBOSS() throws NamingException {
+		final JndiTemplate jndiTemplate = new JndiTemplate();
+		return jndiTemplate.lookup("java:jboss/OracleDS", DataSource.class);
+	}
 
 }
