@@ -32,7 +32,7 @@ public class Course implements Serializable {
 
 	@Column(name = "CO_PUBLISHIED", precision = 1)
 	private Boolean isPublishied;
-	
+
 	@JsonIgnore
 	@Builder.Default
 	@OneToMany(mappedBy = "course", orphanRemoval = true)

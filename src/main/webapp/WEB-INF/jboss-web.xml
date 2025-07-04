@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jboss-web>
-    <context-root>auditing-tables</context-root>
+    <context-root>/auditing-tables/api/blogs</context-root>
 </jboss-web>

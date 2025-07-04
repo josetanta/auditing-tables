@@ -12,8 +12,8 @@ public class AuthorSpec {
 
 	public static Specification<Author> withFirstname(String firstname) {
 		return (root, query, cb) -> cb.and(List.of(
-				cb.like(cb.upper(root.get("firstname")), ("%" + firstname + "%").toUpperCase())
-			).toArray(new Predicate[0]));
+			cb.like(cb.upper(root.get("firstname")), ("%" + firstname + "%").toUpperCase())
+		).toArray(new Predicate[0]));
 	}
 
 	public static Specification<Author> testJoins() {

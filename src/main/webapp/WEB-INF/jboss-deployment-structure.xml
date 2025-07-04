@@ -1,0 +1,12 @@
+<jboss-deployment-structure>
+    <deployment>
+        <exclude-subsystems>
+            <subsystem name="hibernate"/>
+        </exclude-subsystems>
+        <exclusions>
+            <module name="org.slf4j"/>
+            <module name="org.slf4j.impl"/>
+            <module name="org.hibernate"/>
+        </exclusions>
+    </deployment>
+</jboss-deployment-structure>

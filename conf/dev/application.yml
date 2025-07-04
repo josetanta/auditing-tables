@@ -3,9 +3,13 @@
 #    org:
 #      hibernate: INFO
 
+environment: development
+application:
+  version: "01.00.00"
+
 server:
   servlet:
-    context-path: /api/blogs
+    context-path: /auditing-tables/api/blogs
     multipart:
       max-file: 10MB
       max-request-size: 10MB
@@ -18,7 +22,7 @@ spring:
     property-naming-strategy: LOWER_CAMEL_CASE
 
   datasource:
-    jndi-name: java:/blog_DS
+    # jndi-name: java:jboss/OracleDS
     oracle:
       jdbcUrl: jdbc:oracle:thin:@localhost:49165:xe
       username: BLOG

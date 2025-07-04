@@ -1,5 +1,6 @@
 package edu.systemia.auditing_entities.infrastructure.config;
 
+
 import jakarta.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,11 +11,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.util.HashMap;
 
@@ -56,5 +59,12 @@ public class OracleDataSourceConfig {
     ) {
 		return new JpaTransactionManager(entityManager);
 	}
+    
+    @Bean(destroyMethod = "")
+    @ConditionalOnProperty(name = "spring.datasource.jndi-name", havingValue = "java:jboss/OracleDS", matchIfMissing =  false)
+    DataSource jndiOracleDSJBOSS() throws NamingException {
+    	final JndiTemplate jndiTemplate = new JndiTemplate();
+    	return jndiTemplate.lookup("java:jboss/OracleDS", DataSource.class);
+    }
 
 }

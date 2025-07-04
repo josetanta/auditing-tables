@@ -25,7 +25,7 @@ public interface DocService {
 	 *                    <li>Optional security/access parameters</li>
 	 *                  </ul>
 	 * @throws IllegalArgumentException if uploadDTO is null or contains invalid data
-	 * @throws IOException if input stream has errors
+	 * @throws IOException              if input stream has errors
 	 * @see DocFileUploadDTO
 	 */
 	void uploadDocument(@NonNull DocFileUploadDTO uploadDTO) throws IOException;

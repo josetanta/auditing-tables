@@ -1,5 +1,7 @@
 package edu.systemia.auditing_entities.domain.services.adapaters;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfWriter;
 import edu.systemia.auditing_entities.domain.services.AuthorService;
 import edu.systemia.auditing_entities.infrastructure.dto.AuthorQueryResult;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
@@ -12,7 +14,6 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
@@ -20,20 +21,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import static java.text.MessageFormat.format;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -43,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static edu.systemia.auditing_entities.infrastructure.persistence.repository.specs.AuthorSpec.withFirstname;
+import static java.text.MessageFormat.format;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +53,7 @@ public class AuthorServiceAdapter implements AuthorService {
 			var orders = new ArrayList<Order>();
 			for (Sort.Order order : pageable.getSort()) {
 				orders.add(order.isAscending() ? cb.asc(authorRoot.get(order.getProperty()))
-						: order.isDescending() ? cb.desc(authorRoot.get(order.getProperty())) : null);
+					: order.isDescending() ? cb.desc(authorRoot.get(order.getProperty())) : null);
 			}
 			query.orderBy(orders);
 		}
@@ -90,8 +78,8 @@ public class AuthorServiceAdapter implements AuthorService {
 		var authors = authorRepository.findAll();
 
 		String authorSummary = authors.stream()
-				.map(author -> format("{0} {1} {2}", author.getFirstname(), author.getLastname(), author.getActive()))
-				.collect(Collectors.joining(", "));
+			.map(author -> format("{0} {1} {2}", author.getFirstname(), author.getLastname(), author.getActive()))
+			.collect(Collectors.joining(", "));
 
 		var classPathResource = new ClassPathResource("/static/images/oracle_logo.png");
 		byte[] allBytes = Files.readAllBytes(classPathResource.getFile().toPath());

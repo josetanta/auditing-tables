@@ -23,6 +23,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
 	// pageable, Long autghorID);
 
 	// Page<SubscriptionView> getAllByAuthor_IdOrderByCourse_NameDesc(Pageable pageable, Long autghorID);
-	
+
 	Page<SubscriptionView> getAllByAuthor_Id(Pageable pageable, Long autghorID);
 }

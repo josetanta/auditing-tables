@@ -8,18 +8,14 @@
 
 package edu.systemia.auditing_entities.infrastructure.wsdl;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.*;
 
 
 /**
  * <p>Java class for anonymous complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType&gt;
  *   &lt;complexContent&gt;
@@ -31,33 +27,29 @@ import jakarta.xml.bind.annotation.XmlType;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "multiplyResult"
+	"multiplyResult"
 })
 @XmlRootElement(name = "MultiplyResponse")
 public class MultiplyResponse {
 
-    @XmlElement(name = "MultiplyResult")
-    protected int multiplyResult;
+	@XmlElement(name = "MultiplyResult")
+	protected int multiplyResult;
 
-    /**
-     * Gets the value of the multiplyResult property.
-     * 
-     */
-    public int getMultiplyResult() {
-        return multiplyResult;
-    }
+	/**
+	 * Gets the value of the multiplyResult property.
+	 */
+	public int getMultiplyResult() {
+		return multiplyResult;
+	}
 
-    /**
-     * Sets the value of the multiplyResult property.
-     * 
-     */
-    public void setMultiplyResult(int value) {
-        this.multiplyResult = value;
-    }
+	/**
+	 * Sets the value of the multiplyResult property.
+	 */
+	public void setMultiplyResult(int value) {
+		this.multiplyResult = value;
+	}
 
 }

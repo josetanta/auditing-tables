@@ -113,7 +113,7 @@ public class AuthorAPIRest {
 
 	@GetMapping(path = "/author-dto-view")
 	public ResponseEntity<Object> getAuthorDTOViewAll(@PageableDefault(size = 5) Pageable pageable,
-		@RequestParam String firstname) {
+													  @RequestParam String firstname) {
 		var authors = authorService.paginateAuthor(pageable, firstname);
 		return ResponseEntity.ok(authors);
 	}
