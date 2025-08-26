@@ -17,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -55,7 +54,6 @@ public class AuthorAPIRest {
 		return performUpdateAuthor(dto, false);
 	}
 
-	@Modifying
 	@PutMapping("/update/force")
 	public ResponseEntity<AuthorDTO> putUpdateAuthorForce(@RequestBody AuthorDTO dto) {
 		return performUpdateAuthor(dto, true);
