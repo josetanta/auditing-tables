@@ -2,6 +2,8 @@ package edu.systemia.auditing_entities.infrastructure.dto;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,5 +19,7 @@ public class AuthorDTO {
 	private List<SubscriptionDTO> subscriptions;
 
 	@JsonManagedReference("author-notes")
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private List<NoteDTO> notes;
 }

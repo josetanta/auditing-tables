@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,9 +50,18 @@ public class AuthorAPIRest {
 		return ResponseEntity.created(URI.create("")).body(authorDTO);
 	}
 
-	@PutMapping
+	@PutMapping("/update")
 	public ResponseEntity<AuthorDTO> putUpdateAuthor(@RequestBody AuthorDTO dto) {
+		return performUpdateAuthor(dto, false);
+	}
 
+	@Modifying
+	@PutMapping("/update/force")
+	public ResponseEntity<AuthorDTO> putUpdateAuthorForce(@RequestBody AuthorDTO dto) {
+		return performUpdateAuthor(dto, true);
+	}
+
+	private ResponseEntity<AuthorDTO> performUpdateAuthor(final AuthorDTO dto, boolean isForce) {
 		if (Objects.isNull(dto.getId())) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -61,9 +71,15 @@ public class AuthorAPIRest {
 		}
 
 		var author = mapper.toModel(dto, cycleAvoid);
+
+		if (isForce) {
+			authorRepository.updateFirstname(author.getId(), author.getFirstname());
+		}
+
 		var authorDTO = mapper.toDto(authorRepository.save(author), cycleAvoid);
 		return ResponseEntity.ok(authorDTO);
 	}
+
 
 	@GetMapping
 	public ResponseEntity<Page<Author>> getFindAllAuthor(Pageable pageable) {

@@ -37,7 +37,7 @@ public class Author extends EntityBase implements Serializable {
 	@Column(name = "AT_ID", precision = 19)
 	private Long id;
 
-	@Column(name = "AT_FIRSTNAME", length = 100)
+	@Column(name = "AT_FIRSTNAME", length = 100, updatable = false)
 	private String firstname;
 
 	@Column(name = "AT_LASTNAME", length = 100)
