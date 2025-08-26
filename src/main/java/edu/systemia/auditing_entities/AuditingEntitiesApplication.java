@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
@@ -33,7 +32,7 @@ public class AuditingEntitiesApplication extends SpringBootServletInitializer {
 			.run(args);
 	}
 
-	@Bean
+	// @Bean
 	public CommandLineRunner commandLineRunner(SoapClient soapClient) {
 		return args -> {
 			var random = new Random();
