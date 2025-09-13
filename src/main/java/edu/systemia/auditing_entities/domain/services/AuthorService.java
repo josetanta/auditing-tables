@@ -1,7 +1,7 @@
 package edu.systemia.auditing_entities.domain.services;
 
 import com.itextpdf.text.DocumentException;
-import edu.systemia.auditing_entities.infrastructure.dto.AuthorQueryResult;
+import edu.systemia.auditing_entities.domain.dto.AuthorQueryResult;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

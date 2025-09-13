@@ -1,4 +1,4 @@
-package edu.systemia.auditing_entities.infrastructure.dto;
+package edu.systemia.auditing_entities.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;

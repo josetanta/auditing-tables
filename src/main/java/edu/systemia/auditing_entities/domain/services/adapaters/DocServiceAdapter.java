@@ -1,7 +1,7 @@
 package edu.systemia.auditing_entities.domain.services.adapaters;
 
 import edu.systemia.auditing_entities.domain.services.DocService;
-import edu.systemia.auditing_entities.infrastructure.dto.DocFileUploadDTO;
+import edu.systemia.auditing_entities.domain.dto.DocFileUploadDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.BlogDoc;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Course;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.BlogDocRepository;

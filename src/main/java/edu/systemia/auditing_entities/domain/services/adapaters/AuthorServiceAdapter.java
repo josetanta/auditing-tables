@@ -3,7 +3,7 @@ package edu.systemia.auditing_entities.domain.services.adapaters;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 import edu.systemia.auditing_entities.domain.services.AuthorService;
-import edu.systemia.auditing_entities.infrastructure.dto.AuthorQueryResult;
+import edu.systemia.auditing_entities.domain.dto.AuthorQueryResult;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.AuthorRepository;
 import edu.systemia.auditing_entities.infrastructure.utils.HeaderFooterPageEvent;

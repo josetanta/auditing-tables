@@ -1,6 +1,6 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.mappers;
 
-import edu.systemia.auditing_entities.infrastructure.dto.AuthorDTO;
+import edu.systemia.auditing_entities.domain.dto.AuthorDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

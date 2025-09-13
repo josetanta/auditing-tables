@@ -1,6 +1,6 @@
 package edu.systemia.auditing_entities.infrastructure.persistence.mappers;
 
-import edu.systemia.auditing_entities.infrastructure.dto.SubscriptionDTO;
+import edu.systemia.auditing_entities.domain.dto.SubscriptionDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Subscription;
 import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 import org.mapstruct.*;

@@ -2,6 +2,8 @@ package edu.systemia.auditing_entities.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,6 +20,12 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 
+	@Primary
+	@Bean
+	public LocalValidatorFactoryBean validator() {
+		return new LocalValidatorFactoryBean();
+	}
+
 	@Bean
 	LocaleResolver localeResolver() {
 		var session = new SessionLocaleResolver();
@@ -25,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
 		return session;
 	}
 
-	private LocaleChangeInterceptor localeChangeInterceptor() {
+	LocaleChangeInterceptor localeChangeInterceptor() {
 		var locale = new LocaleChangeInterceptor();
 		locale.setParamName("lang");
 		return locale;

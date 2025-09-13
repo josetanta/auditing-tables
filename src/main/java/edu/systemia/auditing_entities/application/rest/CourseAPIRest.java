@@ -1,7 +1,7 @@
 package edu.systemia.auditing_entities.application.rest;
 
 import edu.systemia.auditing_entities.domain.services.SubscriptionService;
-import edu.systemia.auditing_entities.infrastructure.dto.SubscriptionDTO;
+import edu.systemia.auditing_entities.domain.dto.SubscriptionDTO;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Author;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Course;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Subscription;

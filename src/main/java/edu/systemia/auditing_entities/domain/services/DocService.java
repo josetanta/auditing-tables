@@ -1,6 +1,6 @@
 package edu.systemia.auditing_entities.domain.services;
 
-import edu.systemia.auditing_entities.infrastructure.dto.DocFileUploadDTO;
+import edu.systemia.auditing_entities.domain.dto.DocFileUploadDTO;
 import org.springframework.lang.NonNull;
 
 import java.io.IOException;

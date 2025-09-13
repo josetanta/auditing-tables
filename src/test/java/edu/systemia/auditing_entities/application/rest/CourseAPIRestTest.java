@@ -12,9 +12,12 @@ import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(value = { MockitoExtension.class })
 public class CourseAPIRestTest {
 
 	@Mock
@@ -55,6 +58,6 @@ public class CourseAPIRestTest {
 		// Assert
 		assertNotNull(response);
 		assertEquals(HttpStatus.CREATED, response.getStatusCode());
-		verify(courseRepository, times(1)).save(null);
+		verify(courseRepository, times(1)).save(any());
 	}
 }

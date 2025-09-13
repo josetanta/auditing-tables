@@ -5,7 +5,7 @@
 
 environment: development
 application:
-  version: "01.00.00"
+  version: 01.00.00-SNAPSHOT
 
 server:
   servlet:
@@ -20,6 +20,11 @@ spring:
   jackson:
     time-zone: Europe/Paris
     property-naming-strategy: LOWER_CAMEL_CASE
+
+  messages:
+    basename: messages
+    encoding: ISO-8859-15 # UTF-8
+    fallback-to-system-locale: false
 
   datasource:
     # jndi-name: java:jboss/OracleDS
