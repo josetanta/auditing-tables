@@ -5,7 +5,11 @@ import edu.systemia.auditing_entities.domain.services.DocService;
 import edu.systemia.auditing_entities.domain.dto.DocFileUploadDTO;
 =======
 import edu.systemia.auditing_entities.infrastructure.dto.DocFileUploadDTO;
+<<<<<<< HEAD
 >>>>>>> f9268a3 (feat: introspector HIBERNATE)
+=======
+>>>>>>> 6db1167 (Dev)
+>>>>>>> 8fbd36e (resolve)
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.BlogDoc;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Course;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.BlogDocRepository;

@@ -147,7 +147,11 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
     </dependencies>
+<<<<<<< HEAD
 >>>>>>> f9268a3 (feat: introspector HIBERNATE)
+=======
+>>>>>>> 6db1167 (Dev)
+>>>>>>> 8fbd36e (resolve)
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -2,7 +2,11 @@
 package edu.systemia.auditing_entities.domain.dto;
 =======
 package edu.systemia.auditing_entities.infrastructure.dto;
+<<<<<<< HEAD
 >>>>>>> f9268a3 (feat: introspector HIBERNATE):src/main/java/edu/systemia/auditing_entities/infrastructure/dto/DocFileUploadDTO.java
+=======
+>>>>>>> 6db1167 (Dev):src/main/java/edu/systemia/auditing_entities/infrastructure/dto/DocFileUploadDTO.java
+>>>>>>> 8fbd36e (resolve)
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

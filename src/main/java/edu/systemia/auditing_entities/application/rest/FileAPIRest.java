@@ -5,7 +5,11 @@ import edu.systemia.auditing_entities.domain.services.DocService;
 import edu.systemia.auditing_entities.domain.dto.DocFileUploadDTO;
 =======
 import edu.systemia.auditing_entities.infrastructure.dto.DocFileUploadDTO;
+<<<<<<< HEAD
 >>>>>>> f9268a3 (feat: introspector HIBERNATE)
+=======
+>>>>>>> 6db1167 (Dev)
+>>>>>>> 8fbd36e (resolve)
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
