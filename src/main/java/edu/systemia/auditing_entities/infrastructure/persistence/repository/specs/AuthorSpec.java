@@ -22,21 +22,4 @@ public class AuthorSpec {
 			return cb.conjunction();
 		};
 	}
-
-	public static Specification<Author> testJoins() {
-		return (root, query, cb) -> {
-
-			return cb.conjunction();
-		};
-	}
-<<<<<<< HEAD
-
-	public static Specification<Author> testJoins() {
-		return (root, query, cb) -> {
-
-			return cb.conjunction();
-		};
-	}
-=======
->>>>>>> 8fbd36e (resolve)
 }

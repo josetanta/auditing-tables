@@ -1,14 +1,6 @@
 package edu.systemia.auditing_entities.domain.services;
 
-<<<<<<< HEAD
 import edu.systemia.auditing_entities.domain.dto.DocFileUploadDTO;
-=======
-import edu.systemia.auditing_entities.infrastructure.dto.DocFileUploadDTO;
-<<<<<<< HEAD
->>>>>>> f9268a3 (feat: introspector HIBERNATE)
-=======
->>>>>>> 6db1167 (Dev)
->>>>>>> 8fbd36e (resolve)
 import org.springframework.lang.NonNull;
 
 import java.io.IOException;
@@ -33,15 +25,7 @@ public interface DocService {
 	 *                    <li>Optional security/access parameters</li>
 	 *                  </ul>
 	 * @throws IllegalArgumentException if uploadDTO is null or contains invalid data
-<<<<<<< HEAD
 	 * @throws IOException              if input stream has errors
-=======
-	 * @throws IOException if input stream has errors
-<<<<<<< HEAD
->>>>>>> f9268a3 (feat: introspector HIBERNATE)
-=======
->>>>>>> 6db1167 (Dev)
->>>>>>> 8fbd36e (resolve)
 	 * @see DocFileUploadDTO
 	 */
 	void uploadDocument(@NonNull DocFileUploadDTO uploadDTO) throws IOException;

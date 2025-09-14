@@ -1,15 +1,7 @@
 package edu.systemia.auditing_entities.domain.services.adapaters;
 
-import edu.systemia.auditing_entities.domain.services.DocService;
-<<<<<<< HEAD
 import edu.systemia.auditing_entities.domain.dto.DocFileUploadDTO;
-=======
-import edu.systemia.auditing_entities.infrastructure.dto.DocFileUploadDTO;
-<<<<<<< HEAD
->>>>>>> f9268a3 (feat: introspector HIBERNATE)
-=======
->>>>>>> 6db1167 (Dev)
->>>>>>> 8fbd36e (resolve)
+import edu.systemia.auditing_entities.domain.services.DocService;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.BlogDoc;
 import edu.systemia.auditing_entities.infrastructure.persistence.entity.Course;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.BlogDocRepository;
@@ -37,10 +29,10 @@ public class DocServiceAdapter implements DocService {
 		log.info("upload filename= filenameExtension={}", filenameExtension);
 
 		var newBlogDoc = BlogDoc.builder()
-			.blogCourse(Course.builder().id(uploadDTO.courseId()).build())
-			.dcData(uploadDTO.file().getBytes())
-			.dcFilename(uploadDTO.filename())
-			.build();
+							 .blogCourse(Course.builder().id(uploadDTO.courseId()).build())
+							 .dcData(uploadDTO.file().getBytes())
+							 .dcFilename(uploadDTO.filename())
+							 .build();
 
 		BlogDoc save = repository.save(newBlogDoc);
 		log.info("saved file ID={}", save.getDcId());
