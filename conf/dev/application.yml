@@ -9,7 +9,11 @@ application:
 
 server:
   servlet:
+<<<<<<< HEAD:conf/dev/application.yml
     context-path: /auditing-tables/api/blogs
+=======
+    context-path: /api/blogs
+>>>>>>> f9268a3 (feat: introspector HIBERNATE):src/main/resources/application.yml
     multipart:
       max-file: 10MB
       max-request-size: 10MB

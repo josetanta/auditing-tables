@@ -1,7 +1,11 @@
 package edu.systemia.auditing_entities.application.rest;
 
 import edu.systemia.auditing_entities.domain.services.DocService;
+<<<<<<< HEAD
 import edu.systemia.auditing_entities.domain.dto.DocFileUploadDTO;
+=======
+import edu.systemia.auditing_entities.infrastructure.dto.DocFileUploadDTO;
+>>>>>>> f9268a3 (feat: introspector HIBERNATE)
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
