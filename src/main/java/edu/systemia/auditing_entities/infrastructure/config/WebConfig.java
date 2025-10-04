@@ -1,10 +1,12 @@
 package edu.systemia.auditing_entities.infrastructure.config;
 
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -12,7 +14,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
+@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
 	@Override
@@ -22,8 +25,10 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Primary
 	@Bean
-	public LocalValidatorFactoryBean validator() {
-		return new LocalValidatorFactoryBean();
+	public LocalValidatorFactoryBean validator(MessageSource messageSource) {
+		var factoryBean = new LocalValidatorFactoryBean();
+		factoryBean.setValidationMessageSource(messageSource);
+		return factoryBean;
 	}
 
 	@Bean
@@ -33,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
 		return session;
 	}
 
-	LocaleChangeInterceptor localeChangeInterceptor() {
+	private static LocaleChangeInterceptor localeChangeInterceptor() {
 		var locale = new LocaleChangeInterceptor();
 		locale.setParamName("lang");
 		return locale;

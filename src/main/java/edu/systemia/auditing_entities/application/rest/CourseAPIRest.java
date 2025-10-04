@@ -8,6 +8,7 @@ import edu.systemia.auditing_entities.infrastructure.persistence.entity.Subscrip
 import edu.systemia.auditing_entities.infrastructure.persistence.mappers.SubscriptionMapper;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.CourseRepository;
 import edu.systemia.auditing_entities.infrastructure.persistence.repository.SubscriptionRepository;
+import edu.systemia.auditing_entities.infrastructure.persistence.repository.projections.SubscriptionView;
 import edu.systemia.auditing_entities.infrastructure.utils.CycleAvoidingMappingContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class CourseAPIRest {
 	}
 
 	@PostMapping(path = "/subscription")
-	public ResponseEntity<Object> postRegisterSubscription(@RequestBody SubscriptionDTO dto) {
+	public ResponseEntity<Long> postRegisterSubscription(@RequestBody SubscriptionDTO dto) {
 		var subs = Subscription.builder()
 			.author(Author.builder().id(dto.authorId()).build())
 			.course(Course.builder().id(dto.courseId()).build())
@@ -81,7 +82,7 @@ public class CourseAPIRest {
 	}
 
 	@GetMapping("/subscription-view")
-	public ResponseEntity<Object> getPageSubscriptionView(Pageable pageable, @RequestParam Long id) {
+	public ResponseEntity<Page<SubscriptionView>> getPageSubscriptionView(Pageable pageable, @RequestParam Long id) {
 		var result = service.findAllSubscription(pageable, id);
 		return ResponseEntity.ok(result);
 	}
